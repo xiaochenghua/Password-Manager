@@ -7,6 +7,14 @@
 //
 
 #import "AXBaseCell.h"
+#import "UIView+Controller.h"
+
+@interface AXBaseCell ()
+
+@property (nonatomic, strong) UIButton *statusButton;
+@property (nonatomic, strong) NSLayoutConstraint *constraint;
+
+@end
 
 @implementation AXBaseCell
 
@@ -30,9 +38,24 @@
     
     [self.contentView addSubview:self.textField];
     [_textField autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:_separatorView withOffset:10.0f];
-    [_textField autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    self.constraint = [_textField autoPinEdgeToSuperviewEdge:ALEdgeRight];
     [_textField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [_textField autoSetDimension:ALDimensionHeight toSize:44.0f];
+}
+
+- (void)addPasswordStatusButton {
+    [self setUpStatusButton];
+}
+
+- (void)setUpStatusButton {
+    
+    [self.contentView addSubview:self.statusButton];
+    [_statusButton autoSetDimensionsToSize:CGSizeMake(19.0f, 19.0f)];
+    [_statusButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:15.0f];
+    [_statusButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    
+    self.constraint.constant = -34.0f - 10;
+    [self.contentView setNeedsUpdateConstraints];
 }
 
 - (UILabel *)titleLabel {
@@ -61,6 +84,25 @@
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
     }
     return _textField;
+}
+
+- (UIButton *)statusButton {
+    if (!_statusButton) {
+        _statusButton = [[UIButton alloc] init];
+        [_statusButton setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+        [_statusButton addTarget:self.viewController action:@selector(exchangeStatus:) forControlEvents:UIControlEventTouchUpInside];
+#pragma clang diagnostic pop
+    }
+    return _statusButton;
+}
+
+- (NSLayoutConstraint *)constraint {
+    if (!_constraint) {
+        _constraint = [[NSLayoutConstraint alloc] init];
+    }
+    return _constraint;
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "AXDetailController.h"
-#import "AXPasswordCell.h"
+#import "AXDetailCell.h"
 #import "AXPasswordManagerItem.h"
 
 @interface AXDetailController ()<UITableViewDataSource, UITableViewDelegate>
@@ -72,11 +72,7 @@
     static NSString *identifier = @"detail";
     AXDetailCell *cell = (AXDetailCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        if (indexPath.section == 2 && indexPath.row == 0) {
-            cell = [[AXPasswordCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        } else {
-            cell = [[AXDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        }
+        cell = [[AXDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     NSString *title = [[dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
@@ -107,6 +103,7 @@
     
     if (indexPath.section == 2 && indexPath.row == 0) {
         cell.textField.secureTextEntry = YES;
+        [cell addPasswordStatusButton];
     }
     
     return cell;
@@ -120,29 +117,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 20.0f;
-}
-
-- (void)exchangeStatus:(UIButton *)btn {
-    AXDetailCell *cell = nil;
-    UIView *view = [[btn superview] superview];
-    if ([view isKindOfClass:[AXDetailCell class]]) {
-        cell = (AXDetailCell *)view;
-    }
-    
-    if (cell.textField.secureTextEntry) {
-        cell.textField.secureTextEntry = NO;
-        [btn setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (!cell.textField.secureTextEntry) {
-                cell.textField.secureTextEntry = YES;
-                [btn setImage:[UIImage imageNamed:@"show_pwd"] forState:UIControlStateNormal];
-            }
-        });
-    } else {
-        cell.textField.secureTextEntry = YES;
-        [btn setImage:[UIImage imageNamed:@"show_pwd"] forState:UIControlStateNormal];
-    }
 }
 
 - (void)didReceiveMemoryWarning {

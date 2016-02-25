@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C2EC107512F33DA7126CF9CA /* libPods-Password Manager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93462EDB53C6E4F902F7EC72 /* libPods-Password Manager.a */; };
-		E314CDEC1C7D472400F1EE87 /* AXPasswordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E314CDEB1C7D472400F1EE87 /* AXPasswordCell.m */; };
 		E314CDEF1C7D4C7700F1EE87 /* UIView+Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = E314CDEE1C7D4C7700F1EE87 /* UIView+Controller.m */; };
 		E31723881C75A8D900AB8E70 /* AXBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = E31723871C75A8D900AB8E70 /* AXBaseController.m */; };
 		E317238B1C75A9ED00AB8E70 /* AXAddController.m in Sources */ = {isa = PBXBuildFile; fileRef = E317238A1C75A9ED00AB8E70 /* AXAddController.m */; };
@@ -32,8 +31,6 @@
 /* Begin PBXFileReference section */
 		93462EDB53C6E4F902F7EC72 /* libPods-Password Manager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Password Manager.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEB63C7BCAD88D0F86F57B65 /* Pods-Password Manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Password Manager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Password Manager/Pods-Password Manager.debug.xcconfig"; sourceTree = "<group>"; };
-		E314CDEA1C7D472400F1EE87 /* AXPasswordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPasswordCell.h; sourceTree = "<group>"; };
-		E314CDEB1C7D472400F1EE87 /* AXPasswordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPasswordCell.m; sourceTree = "<group>"; };
 		E314CDED1C7D4C7700F1EE87 /* UIView+Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Controller.h"; sourceTree = "<group>"; };
 		E314CDEE1C7D4C7700F1EE87 /* UIView+Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Controller.m"; sourceTree = "<group>"; };
 		E31723861C75A8D900AB8E70 /* AXBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXBaseController.h; path = ../AXBaseController.h; sourceTree = "<group>"; };
@@ -138,8 +135,6 @@
 				E350D12D1C7C02E000F942AE /* AXAddOptionCell.m */,
 				E350D12F1C7C07D000F942AE /* AXDetailCell.h */,
 				E350D1301C7C07D000F942AE /* AXDetailCell.m */,
-				E314CDEA1C7D472400F1EE87 /* AXPasswordCell.h */,
-				E314CDEB1C7D472400F1EE87 /* AXPasswordCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -350,7 +345,6 @@
 				E314CDEF1C7D4C7700F1EE87 /* UIView+Controller.m in Sources */,
 				E37887701C7462C7000E3B4E /* AXPasswordManagerItem.m in Sources */,
 				E317238B1C75A9ED00AB8E70 /* AXAddController.m in Sources */,
-				E314CDEC1C7D472400F1EE87 /* AXPasswordCell.m in Sources */,
 				E350D12E1C7C02E000F942AE /* AXAddOptionCell.m in Sources */,
 				E350D1311C7C07D000F942AE /* AXDetailCell.m in Sources */,
 				E350D12B1C7C023900F942AE /* AXBaseCell.m in Sources */,

@@ -8,6 +8,8 @@
 
 #import "AXBaseController.h"
 
+#import "AXDetailCell.h"
+
 @interface AXBaseController ()
 
 @end
@@ -25,6 +27,29 @@
         _tableView.tableFooterView = [[UIView alloc] init];
     }
     return _tableView;
+}
+
+- (void)exchangeStatus:(UIButton *)btn {
+    AXBaseCell *cell = nil;
+    UIView *view = [[btn superview] superview];
+    if ([view isKindOfClass:[AXBaseCell class]]) {
+        cell = (AXBaseCell *)view;
+    }
+    
+    if (cell.textField.secureTextEntry) {
+        cell.textField.secureTextEntry = NO;
+        [btn setImage:[UIImage imageNamed:@"show_pwd"] forState:UIControlStateNormal];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (!cell.textField.secureTextEntry) {
+                cell.textField.secureTextEntry = YES;
+                [btn setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
+            }
+        });
+    } else {
+        cell.textField.secureTextEntry = YES;
+        [btn setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

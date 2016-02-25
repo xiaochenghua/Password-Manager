@@ -74,14 +74,14 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     
     if (mobileField.text != nil && [mobileField.text trimmingSpaceCharacter].length > 0) {
         if (![NSString isLegitimate:mobileField.text regex:phoneNumberRegex]) {
-            NSLog(@"手机号格式错误！");
+            [self alertWithMessage:@"手机号码格式错误！"];
             return;
         }
     }
     
     if (emailField.text != nil && [emailField.text trimmingSpaceCharacter].length > 0) {
         if (![NSString isLegitimate:emailField.text regex:emailRegex]) {
-            NSLog(@"邮箱地址格式错误！");
+            [self alertWithMessage:@"邮箱地址格式错误！"];
             return;
         }
     }
@@ -112,7 +112,7 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     
     [self presentViewController:alertController animated:YES completion:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:nil];
     });
 }
@@ -227,14 +227,18 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     cell.textField.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    if (indexPath.section == 2) {
+        cell.textField.secureTextEntry = YES;
+    }
+    
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        [cell addPasswordStatusButton];
+    }
+    
     if (indexPath.section == 2 && indexPath.row == 1) {
         cell.textField.returnKeyType = UIReturnKeyDone;
     } else {
         cell.textField.returnKeyType = UIReturnKeyNext;
-    }
-    
-    if (indexPath.section == 2) {
-        cell.textField.secureTextEntry = YES;
     }
     
     return cell;

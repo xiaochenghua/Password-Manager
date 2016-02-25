@@ -15,5 +15,6 @@
 @property (nonatomic, strong) UITextField *textField;
 
 - (void)setUpSubviews;
+- (void)addPasswordStatusButton;
 
 @end

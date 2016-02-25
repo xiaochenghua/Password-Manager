@@ -15,4 +15,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
+- (void)exchangeStatus:(UIButton *)btn;
+
 @end

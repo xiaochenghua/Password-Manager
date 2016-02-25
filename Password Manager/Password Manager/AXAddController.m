@@ -63,12 +63,12 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 - (void)addButtonItemPressed:(UIBarButtonItem *)sender {
     
     if (siteField.text == nil || [siteField.text trimmingSpaceCharacter].length == 0) {
-        NSLog(@"Site name error!");
+        [self alertWithMessage:@"Site不能为空！"];
         return;
     }
     
     if (userField.text == nil || [userField.text trimmingSpaceCharacter].length == 0) {
-        NSLog(@"User name error!");
+        [self alertWithMessage:@"User不能为空！"];
         return;
     }
     
@@ -87,17 +87,12 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     }
     
     if (passwordField.text == nil || [passwordField.text trimmingSpaceCharacter].length == 0) {
-        NSLog(@"Password error!");
-        return;
-    }
-    
-    if (confirmPasswordField.text == nil || [confirmPasswordField.text trimmingSpaceCharacter].length == 0) {
-        NSLog(@"Password confirm fail!");
+        [self alertWithMessage:@"Password不能为空！"];
         return;
     }
     
     if (![passwordField.text isEqualToString:confirmPasswordField.text]) {
-        NSLog(@"Password inconsistent!");
+        [self alertWithMessage:@"Password验证失败！"];
         return;
     }
     
@@ -112,6 +107,16 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)alertWithMessage:(NSString *)string {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:string preferredStyle:UIAlertControllerStyleAlert];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
     UIView *view = [textField superview];
@@ -124,9 +129,7 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     
     CGFloat statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;          //  状态栏高度
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;        //  导航栏高度
-    
-    NSLog(@"(%.0f, %.0f)", self.tableView.contentOffset.x, self.tableView.contentOffset.y);
-    
+        
     //  系统键盘弹出高度：216
     if (statusHeight + navigationBarHeight + rect.origin.y + rect.size.height > kScreenHeight - 216) {
         

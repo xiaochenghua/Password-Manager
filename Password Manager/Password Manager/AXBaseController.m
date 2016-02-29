@@ -8,6 +8,7 @@
 
 #import "AXBaseController.h"
 #import "AXDetailCell.h"
+#import "NSString+Encrypt.h"
 
 @interface AXBaseController ()
 
@@ -38,6 +39,10 @@
     if (cell.textField.secureTextEntry) {
         cell.textField.secureTextEntry = NO;
         [btn setImage:[UIImage imageNamed:@"show_pwd"] forState:UIControlStateNormal];
+        
+        if (cell.textField == nil || [cell.textField.text trimmingSpaceCharacter].length == 0) {
+            return;
+        }
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!cell.textField.secureTextEntry) {

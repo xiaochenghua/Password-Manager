@@ -62,6 +62,8 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 
 - (void)addButtonItemPressed:(UIBarButtonItem *)sender {
     
+    [self.view endEditing:YES];
+    
     if (siteField.text == nil || [siteField.text trimmingSpaceCharacter].length == 0) {
         [self alertWithMessage:@"Site不能为空！"];
         return;

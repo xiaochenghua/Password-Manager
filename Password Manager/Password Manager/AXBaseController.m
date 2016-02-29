@@ -7,7 +7,6 @@
 //
 
 #import "AXBaseController.h"
-
 #import "AXDetailCell.h"
 
 @interface AXBaseController ()

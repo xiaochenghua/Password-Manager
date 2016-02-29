@@ -54,7 +54,7 @@
     [_statusButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:15.0f];
     [_statusButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     
-    self.constraint.constant = -34.0f - 10;
+    self.constraint.constant = -19.0f - 15.0f - 10;
     [self.contentView setNeedsUpdateConstraints];
 }
 

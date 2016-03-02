@@ -1,17 +1,17 @@
 //
-//  NSString+Encrypt.m
+//  NSString+Handler.m
 //  Password Manager
 //
 //  Created by arnoldxiao on 16/2/17.
 //  Copyright © 2016年 arnoldxiao. All rights reserved.
 //
 
-#import "NSString+Encrypt.h"
+#import "NSString+Handler.h"
 
 //  salt
 static NSString *salt = @"q4ZUYTwEL2TMwTFLIVJu";
 
-@implementation NSString (Encrypt)
+@implementation NSString (Handler)
 
 + (NSString *)encrypt:(NSString *)string {
     //  @"Password"转换为NSData，再进行Base64编码，转换为可变模式
@@ -64,6 +64,17 @@ static NSString *salt = @"q4ZUYTwEL2TMwTFLIVJu";
     NSUInteger length = tempString.length - 1 - 2;
     [tempString replaceCharactersInRange:NSMakeRange(1, length) withString:@"●●●●●"];
     return tempString;
+}
+
++ (BOOL)isLegitimate:(NSString *)string regex:(NSString *)regex {
+    
+    if (string == nil || string.length == 0) {
+        return NO;
+    }
+    
+    NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:nil];
+    NSArray *results = [regularExpression matchesInString:string options:NSMatchingReportProgress range:NSMakeRange(0, string.length)];
+    return results.count > 0 ? YES : NO;
 }
 
 - (NSString *)trimmingSpaceCharacter {

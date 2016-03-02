@@ -8,7 +8,7 @@
 
 #import "AXBaseController.h"
 #import "AXDetailCell.h"
-#import "NSString+Encrypt.h"
+#import "NSString+Handler.h"
 
 @interface AXBaseController ()
 

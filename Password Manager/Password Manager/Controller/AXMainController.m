@@ -9,7 +9,7 @@
 #import "AXMainController.h"
 #import "AXDBManager.h"
 #import "AXPasswordManagerItem.h"
-#import "NSString+Encrypt.h"
+#import "NSString+Handler.h"
 #import "AXAddController.h"
 #import "AXDetailController.h"
 #import "AXModifyController.h"
@@ -24,7 +24,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
     self.title = @"Password Manager";
-        
+    
     [self setUpTableView];
     [self rightBarButton];
 }

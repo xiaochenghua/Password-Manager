@@ -11,8 +11,7 @@
 #import "AXPasswordManagerItem.h"
 #import "AXDBManager.h"
 #import "AXInputCell.h"
-#import "NSString+Verifiy.h"
-#import "NSString+Encrypt.h"
+#import "NSString+Handler.h"
 
 @interface AXAddController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 

@@ -9,8 +9,7 @@
 #import "AXModifyController.h"
 #import "AXPasswordManagerItem.h"
 #import "AXInputCell.h"
-#import "NSString+Encrypt.h"
-#import "NSString+Verifiy.h"
+#import "NSString+Handler.h"
 #import "AXDBManager.h"
 
 @interface AXModifyController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>

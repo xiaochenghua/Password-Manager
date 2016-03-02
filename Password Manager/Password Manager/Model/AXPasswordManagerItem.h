@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface AXPasswordManagerItem : NSObject
-//@interface AXPasswordManagerItem : NSObject<NSCoding>
 
 @property (nonatomic, assign) NSInteger itemID;
 @property (nonatomic, copy  ) NSString  *siteName;

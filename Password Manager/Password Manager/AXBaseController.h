@@ -10,6 +10,9 @@
 
 @interface AXBaseController : UIViewController
 {
+    CGPoint defaultContentOffset;
+    NSArray<NSArray *> *dataSource;
+    
     UITextField *itemIdField, *siteField, *userField, *mobileField, *emailField, *passwordField, *confirmPasswordField;
 }
 

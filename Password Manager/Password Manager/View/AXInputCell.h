@@ -1,5 +1,5 @@
 //
-//  AXAddOptionCell.h
+//  AXInputCell.h
 //  Password Manager
 //
 //  Created by arnoldxiao on 16/2/23.
@@ -8,7 +8,7 @@
 
 #import "AXBaseCell.h"
 
-@interface AXAddOptionCell : AXBaseCell
+@interface AXInputCell : AXBaseCell
 
 - (void)setCellWithDict:(NSDictionary *)dict;
 

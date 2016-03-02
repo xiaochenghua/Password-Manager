@@ -10,15 +10,12 @@
 #import "AXMainController.h"
 #import "AXPasswordManagerItem.h"
 #import "AXDBManager.h"
-#import "AXAddOptionCell.h"
+#import "AXInputCell.h"
 #import "NSString+Verifiy.h"
 #import "NSString+Encrypt.h"
 
 @interface AXAddController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
-{
-    CGPoint defaultContentOffset;
-    NSArray<NSArray *> *dataSource;
-}
+
 @end
 
 static const CGFloat SECTION_MARGIN = 20.0f;
@@ -27,7 +24,6 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 
 - (instancetype)init {
     if (self = [super init]) {
-        defaultContentOffset = CGPointMake(0, -64);
         dataSource = @[
                        @[@{@"Site" : @"Site Name"}],
                        @[@{@"User" : @"User Name"}, @{@"Mobile" : @"Phone Number"}, @{@"Email" : @"Email"}],
@@ -65,36 +61,36 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     [self.view endEditing:YES];
     
     if (siteField.text == nil || [siteField.text trimmingSpaceCharacter].length == 0) {
-        [self alertWithMessage:@"Site不能为空！"];
+        [self alertWithMessage:kSiteIsEmpty];
         return;
     }
     
     if (userField.text == nil || [userField.text trimmingSpaceCharacter].length == 0) {
-        [self alertWithMessage:@"User不能为空！"];
+        [self alertWithMessage:kUserIsEmpty];
         return;
     }
     
     if (mobileField.text != nil && [mobileField.text trimmingSpaceCharacter].length > 0) {
         if (![NSString isLegitimate:mobileField.text regex:phoneNumberRegex]) {
-            [self alertWithMessage:@"手机号码格式错误！"];
+            [self alertWithMessage:kMobileFormatError];
             return;
         }
     }
     
     if (emailField.text != nil && [emailField.text trimmingSpaceCharacter].length > 0) {
         if (![NSString isLegitimate:emailField.text regex:emailRegex]) {
-            [self alertWithMessage:@"邮箱地址格式错误！"];
+            [self alertWithMessage:kEmailFormatError];
             return;
         }
     }
     
     if (passwordField.text == nil || [passwordField.text trimmingSpaceCharacter].length == 0) {
-        [self alertWithMessage:@"Password不能为空！"];
+        [self alertWithMessage:kPasswordIsEmpty];
         return;
     }
     
     if (![passwordField.text isEqualToString:confirmPasswordField.text]) {
-        [self alertWithMessage:@"Password验证失败！"];
+        [self alertWithMessage:kPasswordVerfiyFail];
         return;
     }
     
@@ -108,16 +104,6 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     [[AXDBManager sharedManager] insertWithItem:item];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-//- (void)alertWithMessage:(NSString *)string {
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:string preferredStyle:UIAlertControllerStyleAlert];
-//    
-//    [self presentViewController:alertController animated:YES completion:nil];
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//    });
-//}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
@@ -170,7 +156,7 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     }
     
     if (next) {
-        AXAddOptionCell *cell = (AXAddOptionCell *)[self.tableView cellForRowAtIndexPath:next];
+        AXInputCell *cell = (AXInputCell *)[self.tableView cellForRowAtIndexPath:next];
         [cell.textField becomeFirstResponder];
     }
     
@@ -201,9 +187,9 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"add";
-    AXAddOptionCell *cell = (AXAddOptionCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    AXInputCell *cell = (AXInputCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[AXAddOptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[AXInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     NSDictionary *dict = [[dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];

@@ -16,6 +16,13 @@
 
 @implementation AXBaseController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        defaultContentOffset = CGPointMake(0, -64);
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }

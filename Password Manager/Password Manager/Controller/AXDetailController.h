@@ -12,6 +12,6 @@
 
 @interface AXDetailController : AXBaseController
 
-@property (nonatomic, strong) AXPasswordManagerItem *pmItem;
+- (instancetype)initWithPasswordManagerItem:(AXPasswordManagerItem *)pmItem;
 
 @end

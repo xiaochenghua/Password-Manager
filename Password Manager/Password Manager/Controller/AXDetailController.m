@@ -11,21 +11,21 @@
 #import "AXPasswordManagerItem.h"
 
 @interface AXDetailController ()<UITableViewDataSource, UITableViewDelegate>
-{
-    NSArray<NSArray *> *dataSource;
-}
+
+@property (nonatomic, strong) AXPasswordManagerItem *pmItem;
+
 @end
 
 @implementation AXDetailController
 
-- (instancetype)init {
+- (instancetype)initWithPasswordManagerItem:(AXPasswordManagerItem *)pmItem {
     if (self = [super init]) {
+        self.pmItem = pmItem;
         dataSource = @[
                        @[@"ID", @"Site"],
                        @[@"User", @"Mobile", @"Email"],
                        @[@"Password"]
                        ];
-        _pmItem = [[AXPasswordManagerItem alloc] init];
     }
     return self;
 }
@@ -117,6 +117,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 20.0f;
+}
+
+- (AXPasswordManagerItem *)pmItem {
+    if (!_pmItem) {
+        _pmItem = [[AXPasswordManagerItem alloc] init];
+    }
+    return _pmItem;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -72,8 +72,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    AXDetailController *controller = [[AXDetailController alloc] init];
-    controller.pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
+    AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
+    AXDetailController *controller = [[AXDetailController alloc] initWithPasswordManagerItem:pmItem];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

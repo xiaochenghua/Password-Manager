@@ -22,7 +22,7 @@
 		E350D1241C7AF03300F942AE /* NSString+Verifiy.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D1231C7AF03300F942AE /* NSString+Verifiy.m */; };
 		E350D1281C7BF35E00F942AE /* AXDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D1271C7BF35E00F942AE /* AXDetailController.m */; };
 		E350D12B1C7C023900F942AE /* AXBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D12A1C7C023900F942AE /* AXBaseCell.m */; };
-		E350D12E1C7C02E000F942AE /* AXAddOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D12D1C7C02E000F942AE /* AXAddOptionCell.m */; };
+		E350D12E1C7C02E000F942AE /* AXInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D12D1C7C02E000F942AE /* AXInputCell.m */; };
 		E350D1311C7C07D000F942AE /* AXDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D1301C7C07D000F942AE /* AXDetailCell.m */; };
 		E378876D1C745866000E3B4E /* NSString+Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E378876C1C745866000E3B4E /* NSString+Encrypt.m */; };
 		E37887701C7462C7000E3B4E /* AXPasswordManagerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E378876F1C7462C7000E3B4E /* AXPasswordManagerItem.m */; };
@@ -61,8 +61,8 @@
 		E350D1271C7BF35E00F942AE /* AXDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDetailController.m; sourceTree = "<group>"; };
 		E350D1291C7C023900F942AE /* AXBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXBaseCell.h; sourceTree = "<group>"; };
 		E350D12A1C7C023900F942AE /* AXBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXBaseCell.m; sourceTree = "<group>"; };
-		E350D12C1C7C02E000F942AE /* AXAddOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAddOptionCell.h; sourceTree = "<group>"; };
-		E350D12D1C7C02E000F942AE /* AXAddOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAddOptionCell.m; sourceTree = "<group>"; };
+		E350D12C1C7C02E000F942AE /* AXInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXInputCell.h; sourceTree = "<group>"; };
+		E350D12D1C7C02E000F942AE /* AXInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXInputCell.m; sourceTree = "<group>"; };
 		E350D12F1C7C07D000F942AE /* AXDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDetailCell.h; sourceTree = "<group>"; };
 		E350D1301C7C07D000F942AE /* AXDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDetailCell.m; sourceTree = "<group>"; };
 		E378876B1C745866000E3B4E /* NSString+Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Encrypt.h"; path = "../NSString+Encrypt.h"; sourceTree = "<group>"; };
@@ -71,6 +71,7 @@
 		E378876F1C7462C7000E3B4E /* AXPasswordManagerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXPasswordManagerItem.m; path = ../AXPasswordManagerItem.m; sourceTree = "<group>"; };
 		E3C972841C8544BA00019829 /* AXModifyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXModifyController.h; sourceTree = "<group>"; };
 		E3C972851C8544BA00019829 /* AXModifyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXModifyController.m; sourceTree = "<group>"; };
+		E3C972871C868F5900019829 /* String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = String.h; sourceTree = "<group>"; };
 		FF2F2265B1B48BEF1F0E9A36 /* Pods-Password Manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Password Manager.release.xcconfig"; path = "Pods/Target Support Files/Pods-Password Manager/Pods-Password Manager.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,8 +137,8 @@
 			children = (
 				E350D1291C7C023900F942AE /* AXBaseCell.h */,
 				E350D12A1C7C023900F942AE /* AXBaseCell.m */,
-				E350D12C1C7C02E000F942AE /* AXAddOptionCell.h */,
-				E350D12D1C7C02E000F942AE /* AXAddOptionCell.m */,
+				E350D12C1C7C02E000F942AE /* AXInputCell.h */,
+				E350D12D1C7C02E000F942AE /* AXInputCell.m */,
 				E350D12F1C7C07D000F942AE /* AXDetailCell.h */,
 				E350D1301C7C07D000F942AE /* AXDetailCell.m */,
 			);
@@ -150,6 +151,7 @@
 				E34413B71C7560B30031E030 /* SQL.h */,
 				E31723991C76B9DA00AB8E70 /* Size.h */,
 				E350D1251C7AFB8F00F942AE /* Regex.h */,
+				E3C972871C868F5900019829 /* String.h */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -351,7 +353,7 @@
 				E314CDEF1C7D4C7700F1EE87 /* UIView+Controller.m in Sources */,
 				E37887701C7462C7000E3B4E /* AXPasswordManagerItem.m in Sources */,
 				E317238B1C75A9ED00AB8E70 /* AXAddController.m in Sources */,
-				E350D12E1C7C02E000F942AE /* AXAddOptionCell.m in Sources */,
+				E350D12E1C7C02E000F942AE /* AXInputCell.m in Sources */,
 				E350D1311C7C07D000F942AE /* AXDetailCell.m in Sources */,
 				E350D12B1C7C023900F942AE /* AXBaseCell.m in Sources */,
 				E34413B61C755D6A0031E030 /* AXDBManager.m in Sources */,

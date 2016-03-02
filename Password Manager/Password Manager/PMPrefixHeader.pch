@@ -15,6 +15,7 @@
 #import "SQL.h"
 #import "Size.h"
 #import "Regex.h"
+#import "String.h"
 
 #import "PureLayout.h"
 

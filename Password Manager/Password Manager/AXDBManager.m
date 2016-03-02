@@ -63,15 +63,15 @@
     NSLog(@"%@", message);
 }
 
-- (void)updateWithItem:(AXPasswordManagerItem *)item column:(NSString *)column value:(NSString *)value {
-    BOOL result = [_db executeUpdate:kUpdateString, column, value, item.itemID];
+- (void)updateWithItem:(AXPasswordManagerItem *)item {
+    NSString *update_str = [NSString stringWithFormat:kUpdateString, item.itemID];
+    BOOL result = [_db executeUpdate:update_str, item.siteName, item.userName, item.mobile, item.email, item.password];
     NSString *message = result ? @"update success!" : @"update failed!";
     NSLog(@"%@", message);
 }
 
 - (void)deleteWithItem:(AXPasswordManagerItem *)item {
     NSString *delete_str = [NSString stringWithFormat:kDeleteString, item.itemID];
-//    BOOL result = [_db executeUpdate:kDeleteString, item.itemID];
     BOOL result = [_db executeUpdate:delete_str];
     NSString *message = result ? @"delete success!" : @"delete failed!";
     NSLog(@"%@", message);

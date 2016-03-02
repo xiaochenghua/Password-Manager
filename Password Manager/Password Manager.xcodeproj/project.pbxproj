@@ -26,6 +26,7 @@
 		E350D1311C7C07D000F942AE /* AXDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E350D1301C7C07D000F942AE /* AXDetailCell.m */; };
 		E378876D1C745866000E3B4E /* NSString+Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E378876C1C745866000E3B4E /* NSString+Encrypt.m */; };
 		E37887701C7462C7000E3B4E /* AXPasswordManagerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E378876F1C7462C7000E3B4E /* AXPasswordManagerItem.m */; };
+		E3C972861C8544BA00019829 /* AXModifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C972851C8544BA00019829 /* AXModifyController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,8 @@
 		E378876C1C745866000E3B4E /* NSString+Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Encrypt.m"; path = "../NSString+Encrypt.m"; sourceTree = "<group>"; };
 		E378876E1C7462C7000E3B4E /* AXPasswordManagerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXPasswordManagerItem.h; path = ../AXPasswordManagerItem.h; sourceTree = "<group>"; };
 		E378876F1C7462C7000E3B4E /* AXPasswordManagerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXPasswordManagerItem.m; path = ../AXPasswordManagerItem.m; sourceTree = "<group>"; };
+		E3C972841C8544BA00019829 /* AXModifyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXModifyController.h; sourceTree = "<group>"; };
+		E3C972851C8544BA00019829 /* AXModifyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXModifyController.m; sourceTree = "<group>"; };
 		FF2F2265B1B48BEF1F0E9A36 /* Pods-Password Manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Password Manager.release.xcconfig"; path = "Pods/Target Support Files/Pods-Password Manager/Pods-Password Manager.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +116,8 @@
 				E317238A1C75A9ED00AB8E70 /* AXAddController.m */,
 				E350D1261C7BF35E00F942AE /* AXDetailController.h */,
 				E350D1271C7BF35E00F942AE /* AXDetailController.m */,
+				E3C972841C8544BA00019829 /* AXModifyController.h */,
+				E3C972851C8544BA00019829 /* AXModifyController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3230FD71C7454EF002F7516 /* AppDelegate.m in Sources */,
+				E3C972861C8544BA00019829 /* AXModifyController.m in Sources */,
 				E314CDEF1C7D4C7700F1EE87 /* UIView+Controller.m in Sources */,
 				E37887701C7462C7000E3B4E /* AXPasswordManagerItem.m in Sources */,
 				E317238B1C75A9ED00AB8E70 /* AXAddController.m in Sources */,

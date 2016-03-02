@@ -25,7 +25,7 @@ password TEXT NOT NULL);"
 
 //  更新
 #define kUpdateString \
-@"UPDATE t_password_item SET ?=? WHERE item_id=?"
+@"UPDATE t_password_item SET site_name=?,user_name=?,mobile=?,email=?,password=? WHERE item_id=%ld"
 
 //  删除
 #define kDeleteString \

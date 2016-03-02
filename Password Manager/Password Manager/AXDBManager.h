@@ -32,7 +32,7 @@
 /**
  *  更新
  */
-- (void)updateWithItem:(AXPasswordManagerItem *)item column:(NSString *)column value:(NSString *)value;
+- (void)updateWithItem:(AXPasswordManagerItem *)item;
 
 /**
  *  删除

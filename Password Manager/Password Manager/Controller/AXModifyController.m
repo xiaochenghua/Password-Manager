@@ -1,32 +1,34 @@
 //
-//  AXAddController.m
+//  AXModifyController.m
 //  Password Manager
 //
-//  Created by arnoldxiao on 16/2/18.
+//  Created by arnoldxiao on 16/3/1.
 //  Copyright © 2016年 arnoldxiao. All rights reserved.
 //
 
-#import "AXAddController.h"
-#import "AXMainController.h"
+#import "AXModifyController.h"
 #import "AXPasswordManagerItem.h"
-#import "AXDBManager.h"
 #import "AXAddOptionCell.h"
-#import "NSString+Verifiy.h"
 #import "NSString+Encrypt.h"
+#import "NSString+Verifiy.h"
+#import "AXDBManager.h"
 
-@interface AXAddController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface AXModifyController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 {
     CGPoint defaultContentOffset;
     NSArray<NSArray *> *dataSource;
 }
+@property (nonatomic, strong) AXPasswordManagerItem *pmItem;
+
 @end
 
 static const CGFloat SECTION_MARGIN = 20.0f;
 
-@implementation AXAddController
+@implementation AXModifyController
 
-- (instancetype)init {
+- (instancetype)initWithPasswordManagerItem:(AXPasswordManagerItem *)pmItem {
     if (self = [super init]) {
+        self.pmItem = pmItem;
         defaultContentOffset = CGPointMake(0, -64);
         dataSource = @[
                        @[@{@"Site" : @"Site Name"}],
@@ -40,7 +42,7 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
-    self.title = @"Add Password";
+    self.title = @"Modify Password";
     
     [self setUpTableView];
     [self rightBarButton];
@@ -56,11 +58,11 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 }
 
 - (void)rightBarButton {
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addButtonItemPressed:)];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonItemPressed:)];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
-- (void)addButtonItemPressed:(UIBarButtonItem *)sender {
+- (void)saveButtonItemPressed:(UIBarButtonItem *)sender {
     
     [self.view endEditing:YES];
     
@@ -98,26 +100,101 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    AXPasswordManagerItem *item = [[AXPasswordManagerItem alloc] init];
-    [item setPMItemWithSite:[siteField.text trimmingSpaceCharacter]
+    [self.pmItem setPMItemWithSite:[siteField.text trimmingSpaceCharacter]
                        user:[userField.text trimmingSpaceCharacter]
                      mobile:[mobileField.text trimmingSpaceCharacter]
                       email:[emailField.text trimmingSpaceCharacter]
                    password:[passwordField.text trimmingSpaceCharacter]];
     
-    [[AXDBManager sharedManager] insertWithItem:item];
+    [[AXDBManager sharedManager] updateWithItem:self.pmItem];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//- (void)alertWithMessage:(NSString *)string {
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:string preferredStyle:UIAlertControllerStyleAlert];
-//    
-//    [self presentViewController:alertController animated:YES completion:nil];
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//    });
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSInteger rows = 0;
+    switch (section) {
+        case 0:
+            rows = 1;
+            break;
+            
+        case 1:
+            rows = 3;
+            break;
+            
+        case 2:
+            rows = 2;
+            break;
+    }
+    return rows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *identifier = @"modify";
+    AXAddOptionCell *cell = (AXAddOptionCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[AXAddOptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    NSDictionary *dict = [[dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [cell setCellWithDict:dict];
+    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        siteField = cell.textField;
+        siteField.text = self.pmItem.siteName;
+        siteField.keyboardType = UIKeyboardTypeURL;
+    } else if (indexPath.section == 1 && indexPath.row == 0) {
+        userField = cell.textField;
+        userField.text = self.pmItem.userName;
+    } else if (indexPath.section == 1 && indexPath.row == 1) {
+        mobileField = cell.textField;
+        mobileField.text = self.pmItem.mobile;
+        mobileField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    } else if (indexPath.section == 1 && indexPath.row == 2) {
+        emailField = cell.textField;
+        emailField.text = self.pmItem.email;
+        emailField.keyboardType = UIKeyboardTypeEmailAddress;
+    } else if (indexPath.section == 2 && indexPath.row == 0) {
+        passwordField = cell.textField;
+        passwordField.text = self.pmItem.password;
+    } else if (indexPath.section == 2 && indexPath.row == 1) {
+        confirmPasswordField = cell.textField;
+        confirmPasswordField.text = self.pmItem.password;
+    }
+    
+    cell.textField.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (indexPath.section == 2) {
+        cell.textField.secureTextEntry = YES;
+    }
+    
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        [cell addPasswordStatusButton];
+    }
+    
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        cell.textField.returnKeyType = UIReturnKeyDone;
+    } else {
+        cell.textField.returnKeyType = UIReturnKeyNext;
+    }
+    
+    return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor clearColor];
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return SECTION_MARGIN;
+}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
@@ -131,7 +208,7 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     
     CGFloat statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;          //  状态栏高度
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;        //  导航栏高度
-        
+    
     //  系统键盘弹出高度：216
     if (statusHeight + navigationBarHeight + rect.origin.y + rect.size.height > kScreenHeight - 216) {
         
@@ -177,83 +254,11 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     return YES;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger rows = 0;
-    switch (section) {
-        case 0:
-            rows = 1;
-            break;
-            
-        case 1:
-            rows = 3;
-            break;
-            
-        case 2:
-            rows = 2;
-            break;
+- (AXPasswordManagerItem *)pmItem {
+    if (!_pmItem) {
+        _pmItem = [[AXPasswordManagerItem alloc] init];
     }
-    return rows;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"add";
-    AXAddOptionCell *cell = (AXAddOptionCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[AXAddOptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    
-    NSDictionary *dict = [[dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [cell setCellWithDict:dict];
-    
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        siteField = cell.textField;
-        siteField.keyboardType = UIKeyboardTypeURL;
-    } else if (indexPath.section == 1 && indexPath.row == 0) {
-        userField = cell.textField;
-    } else if (indexPath.section == 1 && indexPath.row == 1) {
-        mobileField = cell.textField;
-        mobileField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    } else if (indexPath.section == 1 && indexPath.row == 2) {
-        emailField = cell.textField;
-        emailField.keyboardType = UIKeyboardTypeEmailAddress;
-    } else if (indexPath.section == 2 && indexPath.row == 0) {
-        passwordField = cell.textField;
-    } else if (indexPath.section == 2 && indexPath.row == 1) {
-        confirmPasswordField = cell.textField;
-    }
-    
-    cell.textField.delegate = self;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    if (indexPath.section == 2) {
-        cell.textField.secureTextEntry = YES;
-    }
-    
-    if (indexPath.section == 2 && indexPath.row == 0) {
-        [cell addPasswordStatusButton];
-    }
-    
-    if (indexPath.section == 2 && indexPath.row == 1) {
-        cell.textField.returnKeyType = UIReturnKeyDone;
-    } else {
-        cell.textField.returnKeyType = UIReturnKeyNext;
-    }
-    
-    return cell;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor clearColor];
-    return view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return SECTION_MARGIN;
+    return _pmItem;
 }
 
 - (void)didReceiveMemoryWarning {

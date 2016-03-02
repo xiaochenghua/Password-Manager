@@ -12,6 +12,7 @@
 #import "NSString+Encrypt.h"
 #import "AXAddController.h"
 #import "AXDetailController.h"
+#import "AXModifyController.h"
 
 @interface AXMainController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -76,20 +77,21 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
         [[AXDBManager sharedManager] deleteWithItem:pmItem];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return @"删除";
+    }];
+    
+    UITableViewRowAction *updateAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"修改" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        AXModifyController *controller = [[AXModifyController alloc] initWithPasswordManagerItem:pmItem];
+        [self.navigationController pushViewController:controller animated:YES];
+    }];
+    updateAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    return @[updateAction, deleteAction];
 }
 
 - (void)didReceiveMemoryWarning {

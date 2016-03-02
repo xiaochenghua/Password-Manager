@@ -70,20 +70,22 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     }
     
     if (mobileField.text != nil && [mobileField.text trimmingSpaceCharacter].length > 0) {
-        if (![NSString isLegitimate:mobileField.text regex:phoneNumberRegex]) {
+        if (![mobileField.text isLegitimateWithRegex:phoneNumberRegex]) {
             [self alertWithMessage:kMobileFormatError];
             return;
         }
     }
     
     if (emailField.text != nil && [emailField.text trimmingSpaceCharacter].length > 0) {
-        if (![NSString isLegitimate:emailField.text regex:emailRegex]) {
+        if (![emailField.text isLegitimateWithRegex:emailRegex]) {
             [self alertWithMessage:kEmailFormatError];
             return;
         }
     }
     
-    if (passwordField.text == nil || [passwordField.text trimmingSpaceCharacter].length == 0) {
+    NSString *password = [passwordField.text trimmingSpaceCharacter];
+    
+    if (passwordField.text == nil || password.length == 0) {
         [self alertWithMessage:kPasswordIsEmpty];
         return;
     }
@@ -93,12 +95,14 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
+    
+    
     AXPasswordManager *manager = [[AXPasswordManager alloc] init];
     [manager setPMWithSite:[siteField.text trimmingSpaceCharacter]
                        user:[userField.text trimmingSpaceCharacter]
                      mobile:[mobileField.text trimmingSpaceCharacter]
                       email:[emailField.text trimmingSpaceCharacter]
-                   password:[passwordField.text trimmingSpaceCharacter]];
+                   password:[password encrypt]];
     
     [[AXDBManager sharedManager] insertManager:manager];
     [self.navigationController popViewControllerAnimated:YES];

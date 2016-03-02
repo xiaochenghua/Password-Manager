@@ -9,6 +9,7 @@
 #import "AXDetailController.h"
 #import "AXDetailCell.h"
 #import "AXPasswordManager.h"
+#import "NSString+Handler.h"
 
 @interface AXDetailController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -95,7 +96,7 @@
         emailField.text = self.manager.email;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         passwordField = cell.textField;
-        passwordField.text = self.manager.password;
+        passwordField.text = [self.manager.password decrypt];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

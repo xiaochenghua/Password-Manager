@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AXMainController.h"
+#import "AXDBManager.h"
 
 @interface AppDelegate ()
 
@@ -51,6 +52,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[AXDBManager sharedManager] close];
 }
 
 @end

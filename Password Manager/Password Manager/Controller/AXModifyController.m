@@ -72,20 +72,22 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     }
     
     if (mobileField.text != nil && [mobileField.text trimmingSpaceCharacter].length > 0) {
-        if (![NSString isLegitimate:mobileField.text regex:phoneNumberRegex]) {
+        if (![mobileField.text isLegitimateWithRegex:phoneNumberRegex]) {
             [self alertWithMessage:kMobileFormatError];
             return;
         }
     }
     
     if (emailField.text != nil && [emailField.text trimmingSpaceCharacter].length > 0) {
-        if (![NSString isLegitimate:emailField.text regex:emailRegex]) {
+        if (![emailField.text isLegitimateWithRegex:emailRegex]) {
             [self alertWithMessage:kEmailFormatError];
             return;
         }
     }
     
-    if (passwordField.text == nil || [passwordField.text trimmingSpaceCharacter].length == 0) {
+    NSString *password = [passwordField.text trimmingSpaceCharacter];
+    
+    if (passwordField.text == nil || password.length == 0) {
         [self alertWithMessage:kPasswordIsEmpty];
         return;
     }
@@ -99,7 +101,7 @@ static const CGFloat SECTION_MARGIN = 20.0f;
                        user:[userField.text trimmingSpaceCharacter]
                      mobile:[mobileField.text trimmingSpaceCharacter]
                       email:[emailField.text trimmingSpaceCharacter]
-                   password:[passwordField.text trimmingSpaceCharacter]];
+                   password:[password encrypt]];
     
     [[AXDBManager sharedManager] updateManager:self.manager];
     
@@ -155,10 +157,10 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         emailField.keyboardType = UIKeyboardTypeEmailAddress;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         passwordField = cell.textField;
-        passwordField.text = self.manager.password;
+        passwordField.text = [self.manager.password decrypt];
     } else if (indexPath.section == 2 && indexPath.row == 1) {
         confirmPasswordField = cell.textField;
-        confirmPasswordField.text = self.manager.password;
+        confirmPasswordField.text = [self.manager.password decrypt];
     }
     
     cell.textField.delegate = self;

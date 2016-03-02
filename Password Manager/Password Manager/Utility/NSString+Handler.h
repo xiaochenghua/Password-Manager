@@ -11,41 +11,33 @@
 @interface NSString (Handler)
 
 /**
- *  --编码
- *
- *  @param string 需要编码的字符串
+ *  编码
  *
  *  @return 已编码的字符串
  */
-+ (NSString *)encrypt:(NSString *)string;
+- (NSString *)encrypt;
 
 /**
- *  --解码
- *
- *  @param string 需要解码的字符串
+ *  解码
  *
  *  @return 已解码的字符串
  */
-+ (NSString *)decrypt:(NSString *)string;
+- (NSString *)decrypt;
 
 /**
  *  隐藏字符串中特定位置的子字符串
  *
- *  @param string 字符串
- *
  *  @return 隐藏后的字符串
  */
-+ (NSString *)hideSubStringFromString:(NSString *)string;
+- (NSString *)hideSubString;
 
 /**
  *  验证字符串是否合法
- *
- *  @param string 待验证的字符串
  *  @param regex  正则表达式
  *
  *  @return 合法则返回YES，否则返回NO
  */
-+ (BOOL)isLegitimate:(NSString *)string regex:(NSString *)regex;
+- (BOOL)isLegitimateWithRegex:(NSString *)regex;
 
 /**
  *  去除字符串两端的空格

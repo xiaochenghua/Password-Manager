@@ -34,7 +34,6 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor lightGrayColor];
     self.title = @"Add Password";
     
     [self setUpTableView];

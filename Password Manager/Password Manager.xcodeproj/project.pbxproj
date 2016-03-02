@@ -40,7 +40,6 @@
 		E3230FD61C7454EF002F7516 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E3230FDE1C7454EF002F7516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3230FE31C7454EF002F7516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E34413B71C7560B30031E030 /* SQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SQL.h; path = ../SQL.h; sourceTree = "<group>"; };
 		E34413B81C7561B20031E030 /* PMPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMPrefixHeader.pch; sourceTree = "<group>"; };
 		E34413B91C757EBE0031E030 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E350D1251C7AFB8F00F942AE /* Regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Regex.h; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 		E3C972981C86973800019829 /* AXMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXMainController.m; sourceTree = "<group>"; };
 		E3C9729A1C86975B00019829 /* AXPasswordManagerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPasswordManagerItem.h; sourceTree = "<group>"; };
 		E3C9729B1C86975B00019829 /* AXPasswordManagerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPasswordManagerItem.m; sourceTree = "<group>"; };
+		E3C9729D1C86997C00019829 /* SQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQL.h; sourceTree = "<group>"; };
 		FF2F2265B1B48BEF1F0E9A36 /* Pods-Password Manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Password Manager.release.xcconfig"; path = "Pods/Target Support Files/Pods-Password Manager/Pods-Password Manager.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,7 +147,7 @@
 		E317238F1C75AD7700AB8E70 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
-				E34413B71C7560B30031E030 /* SQL.h */,
+				E3C9729D1C86997C00019829 /* SQL.h */,
 				E31723991C76B9DA00AB8E70 /* Size.h */,
 				E350D1251C7AFB8F00F942AE /* Regex.h */,
 				E3C972871C868F5900019829 /* String.h */,

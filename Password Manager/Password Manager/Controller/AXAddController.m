@@ -8,12 +8,12 @@
 
 #import "AXAddController.h"
 #import "AXMainController.h"
-#import "AXPasswordManagerItem.h"
+#import "AXPasswordManager.h"
 #import "AXDBManager.h"
 #import "AXInputCell.h"
 #import "NSString+Handler.h"
 
-@interface AXAddController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface AXAddController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @end
 
@@ -93,14 +93,14 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    AXPasswordManagerItem *item = [[AXPasswordManagerItem alloc] init];
-    [item setPMItemWithSite:[siteField.text trimmingSpaceCharacter]
+    AXPasswordManager *manager = [[AXPasswordManager alloc] init];
+    [manager setPMWithSite:[siteField.text trimmingSpaceCharacter]
                        user:[userField.text trimmingSpaceCharacter]
                      mobile:[mobileField.text trimmingSpaceCharacter]
                       email:[emailField.text trimmingSpaceCharacter]
                    password:[passwordField.text trimmingSpaceCharacter]];
     
-    [[AXDBManager sharedManager] insertWithItem:item];
+    [[AXDBManager sharedManager] insertManager:manager];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -114,13 +114,12 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     UITableViewCell *cell = (UITableViewCell *)view;
     CGRect rect = cell.frame;
     
-    CGFloat statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;          //  状态栏高度
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;        //  导航栏高度
+    CGFloat statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
         
-    //  系统键盘弹出高度：216
-    if (statusHeight + navigationBarHeight + rect.origin.y + rect.size.height > kScreenHeight - 216) {
+    if (statusHeight + navigationBarHeight + rect.origin.y + rect.size.height > kScreenHeight - kSystemKeyboardHeight) {
         
-        CGFloat offset = statusHeight + navigationBarHeight + rect.origin.y + rect.size.height - kScreenHeight + 216;
+        CGFloat offset = statusHeight + navigationBarHeight + rect.origin.y + rect.size.height - kScreenHeight + kSystemKeyboardHeight;
         CGFloat y = defaultContentOffset.y + offset + SECTION_MARGIN;
         
         [self.tableView setContentOffset:CGPointMake(0, y) animated:YES];

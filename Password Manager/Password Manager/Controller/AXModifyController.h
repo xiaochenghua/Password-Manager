@@ -8,10 +8,10 @@
 
 #import "AXBaseController.h"
 
-@class AXPasswordManagerItem;
+@class AXPasswordManager;
 
 @interface AXModifyController : AXBaseController
 
-- (instancetype)initWithPasswordManagerItem:(AXPasswordManagerItem *)pmItem;
+- (instancetype)initWithPasswordManagerItem:(AXPasswordManager *)manager;
 
 @end

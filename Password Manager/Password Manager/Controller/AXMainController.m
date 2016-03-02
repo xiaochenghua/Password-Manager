@@ -8,13 +8,13 @@
 
 #import "AXMainController.h"
 #import "AXDBManager.h"
-#import "AXPasswordManagerItem.h"
+#import "AXPasswordManager.h"
 #import "NSString+Handler.h"
 #import "AXAddController.h"
 #import "AXDetailController.h"
 #import "AXModifyController.h"
 
-@interface AXMainController ()<UITableViewDataSource, UITableViewDelegate>
+@interface AXMainController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -63,30 +63,30 @@
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
+    AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.textLabel.text = pmItem.siteName;
+    cell.textLabel.text = manager.siteName;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
-    AXDetailController *controller = [[AXDetailController alloc] initWithPasswordManagerItem:pmItem];
+    AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
+    AXDetailController *controller = [[AXDetailController alloc] initWithPasswordManagerItem:manager];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
-        [[AXDBManager sharedManager] deleteWithItem:pmItem];
+        AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        [[AXDBManager sharedManager] deleteManager:manager];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
     UITableViewRowAction *updateAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"修改" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        AXPasswordManagerItem *pmItem = [[AXDBManager sharedManager] queryAll][indexPath.row];
-        AXModifyController *controller = [[AXModifyController alloc] initWithPasswordManagerItem:pmItem];
+        AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        AXModifyController *controller = [[AXModifyController alloc] initWithPasswordManagerItem:manager];
         [self.navigationController pushViewController:controller animated:YES];
     }];
     updateAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];

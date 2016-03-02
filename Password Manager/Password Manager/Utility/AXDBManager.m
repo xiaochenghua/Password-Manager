@@ -8,7 +8,7 @@
 
 #import "AXDBManager.h"
 #import "FMDB.h"
-#import "AXPasswordManagerItem.h"
+#import "AXPasswordManager.h"
 
 @interface AXDBManager ()<NSCopying>
 
@@ -45,7 +45,6 @@
 - (void)create {
     NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *fileName = [documentDirectory stringByAppendingPathComponent:@"password.sqlite"];
-    
     NSLog(@"%@", fileName);
     
     _db = [FMDatabase databaseWithPath:fileName];
@@ -57,31 +56,31 @@
     }
 }
 
-- (void)insertWithItem:(AXPasswordManagerItem *)item {
-    BOOL result = [_db executeUpdate:kInsertString, item.siteName, item.userName, item.mobile, item.email, item.password];
+- (void)insertManager:(AXPasswordManager *)manager {
+    BOOL result = [_db executeUpdate:kInsertString, manager.siteName, manager.userName, manager.mobile, manager.email, manager.password];
     NSString *message = result ? @"insert success!" : @"insert failed!";
     NSLog(@"%@", message);
 }
 
-- (void)updateWithItem:(AXPasswordManagerItem *)item {
-    NSString *update_str = [NSString stringWithFormat:kUpdateString, item.itemID];
-    BOOL result = [_db executeUpdate:update_str, item.siteName, item.userName, item.mobile, item.email, item.password];
+- (void)updateManager:(AXPasswordManager *)manager {
+    NSString *update_str = [NSString stringWithFormat:kUpdateString, manager.itemID];
+    BOOL result = [_db executeUpdate:update_str, manager.siteName, manager.userName, manager.mobile, manager.email, manager.password];
     NSString *message = result ? @"update success!" : @"update failed!";
     NSLog(@"%@", message);
 }
 
-- (void)deleteWithItem:(AXPasswordManagerItem *)item {
-    NSString *delete_str = [NSString stringWithFormat:kDeleteString, item.itemID];
+- (void)deleteManager:(AXPasswordManager *)manager {
+    NSString *delete_str = [NSString stringWithFormat:kDeleteString, manager.itemID];
     BOOL result = [_db executeUpdate:delete_str];
     NSString *message = result ? @"delete success!" : @"delete failed!";
     NSLog(@"%@", message);
 }
 
-- (NSArray<AXPasswordManagerItem *> *)queryAll {
+- (NSArray<AXPasswordManager *> *)queryAll {
     return [self arrayWithResultSet:[_db executeQuery:kQueryAllString]];
 }
 
-- (NSArray<AXPasswordManagerItem *> *)queryWithSite:(NSString *)siteName {
+- (NSArray<AXPasswordManager *> *)queryWithSite:(NSString *)siteName {
     NSString *sql = [_db stringForQuery:kQueryString, siteName];
     NSLog(@"sql = %@", sql);          //  <---测试
     FMResultSet *rs = [_db executeQuery:sql];
@@ -89,17 +88,17 @@
     return [self arrayWithResultSet:rs];
 }
 
-- (NSArray<AXPasswordManagerItem *> *)arrayWithResultSet:(FMResultSet *)rs {
-    NSMutableArray<AXPasswordManagerItem *> *tempArray = [NSMutableArray array];
+- (NSArray<AXPasswordManager *> *)arrayWithResultSet:(FMResultSet *)rs {
+    NSMutableArray<AXPasswordManager *> *tempArray = [NSMutableArray array];
     while ([rs next]) {
-        AXPasswordManagerItem *item = [[AXPasswordManagerItem alloc] init];
-        item.itemID   = [rs stringForColumn:@"item_id"].integerValue;
-        item.siteName = [rs stringForColumn:@"site_name"];
-        item.userName = [rs stringForColumn:@"user_name"];
-        item.mobile   = [rs stringForColumn:@"mobile"];
-        item.email    = [rs stringForColumn:@"email"];
-        item.password = [rs stringForColumn:@"password"];
-        [tempArray addObject:item];
+        AXPasswordManager *manager = [[AXPasswordManager alloc] init];
+        manager.itemID   = [rs stringForColumn:@"item_id"].integerValue;
+        manager.siteName = [rs stringForColumn:@"site_name"];
+        manager.userName = [rs stringForColumn:@"user_name"];
+        manager.mobile   = [rs stringForColumn:@"mobile"];
+        manager.email    = [rs stringForColumn:@"email"];
+        manager.password = [rs stringForColumn:@"password"];
+        [tempArray addObject:manager];
     }
     return [tempArray copy];
 }

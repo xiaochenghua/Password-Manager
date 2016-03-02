@@ -8,19 +8,19 @@
 
 #import "AXDetailController.h"
 #import "AXDetailCell.h"
-#import "AXPasswordManagerItem.h"
+#import "AXPasswordManager.h"
 
-@interface AXDetailController ()<UITableViewDataSource, UITableViewDelegate>
+@interface AXDetailController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) AXPasswordManagerItem *pmItem;
+@property (nonatomic, strong) AXPasswordManager *manager;
 
 @end
 
 @implementation AXDetailController
 
-- (instancetype)initWithPasswordManagerItem:(AXPasswordManagerItem *)pmItem {
+- (instancetype)initWithPasswordManagerItem:(AXPasswordManager *)manager {
     if (self = [super init]) {
-        self.pmItem = pmItem;
+        self.manager = manager;
         dataSource = @[
                        @[@"ID", @"Site"],
                        @[@"User", @"Mobile", @"Email"],
@@ -80,22 +80,22 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         itemIdField = cell.textField;
-        itemIdField.text = [NSString stringWithFormat:@"%ld", self.pmItem.itemID];
+        itemIdField.text = [NSString stringWithFormat:@"%ld", self.manager.itemID];
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         siteField = cell.textField;
-        siteField.text = self.pmItem.siteName;
+        siteField.text = self.manager.siteName;
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         userField = cell.textField;
-        userField.text = self.pmItem.userName;
+        userField.text = self.manager.userName;
     } else if (indexPath.section == 1 && indexPath.row == 1) {
         mobileField = cell.textField;
-        mobileField.text = self.pmItem.mobile;
+        mobileField.text = self.manager.mobile;
     } else if (indexPath.section == 1 && indexPath.row == 2) {
         emailField = cell.textField;
-        emailField.text = self.pmItem.email;
+        emailField.text = self.manager.email;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         passwordField = cell.textField;
-        passwordField.text = self.pmItem.password;
+        passwordField.text = self.manager.password;
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -119,11 +119,11 @@
     return 20.0f;
 }
 
-- (AXPasswordManagerItem *)pmItem {
-    if (!_pmItem) {
-        _pmItem = [[AXPasswordManagerItem alloc] init];
+- (AXPasswordManager *)manager {
+    if (!_manager) {
+        _manager = [[AXPasswordManager alloc] init];
     }
-    return _pmItem;
+    return _manager;
 }
 
 - (void)didReceiveMemoryWarning {

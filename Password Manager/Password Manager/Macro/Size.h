@@ -12,4 +12,7 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
+#define kSystemKeyboardHeight 216
+
+
 #endif /* Size_h */

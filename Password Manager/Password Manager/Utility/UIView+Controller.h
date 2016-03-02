@@ -10,6 +10,9 @@
 
 @interface UIView (Controller)
 
+/**
+ *  获取view所在的UIViewController，如果没有，则返回nil
+ */
 - (UIViewController *)viewController;
 
 @end

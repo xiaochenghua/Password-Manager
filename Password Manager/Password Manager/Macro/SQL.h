@@ -31,6 +31,12 @@ password TEXT NOT NULL);"
 #define kDeleteString \
 @"DELETE FROM t_password_item WHERE item_id=%ld"
 
+#define kDeleteAllString \
+@"DELETE FROM t_password_item"
+
+#define kSeqEqual0 \
+@"UPDATE sqlite_sequence SET seq=0 WHERE name='t_password_item'"
+
 //  查找数据
 #define kQueryString \
 @"SELECT * FROM t_password_item WHERE INSTR(site_name,?)>0 ORDER BY site_name ASC"

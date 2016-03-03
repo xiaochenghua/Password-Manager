@@ -76,6 +76,17 @@
     NSLog(@"%@", message);
 }
 
+- (void)deleteAll {
+    BOOL result01, result02 = NO;
+    result01 = [_db executeUpdate:kDeleteAllString];
+    if (result01) {
+        result02 = [_db executeUpdate:kSeqEqual0];
+    }
+    NSString *message01 = result01 ? @"delete all success!" : @"delete all failed!";
+    NSString *message02 = result02 ? @"Seq set 0 success!" : @"Seq set 0 failed!";
+    NSLog(@"%@ and %@", message01, message02);
+}
+
 - (NSArray<AXPasswordManager *> *)queryAll {
     return [self arrayWithResultSet:[_db executeQuery:kQueryAllString]];
 }

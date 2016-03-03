@@ -40,6 +40,11 @@
 - (void)deleteManager:(AXPasswordManager *)manager;
 
 /**
+ *  删除所有数据
+ */
+- (void)deleteAll;
+
+/**
  *  查询
  */
 - (NSArray<AXPasswordManager *> *)queryAll;

@@ -16,4 +16,7 @@
 #define kPasswordIsEmpty    @"Password不能为空!"
 #define kPasswordVerfiyFail @"Password验证失败!"
 
+#define kComposeMessage @"Please enter a command code\n(Four-digit Number)"
+#define kDeleteAllMessage @"Delete all the data?"
+
 #endif /* String_h */

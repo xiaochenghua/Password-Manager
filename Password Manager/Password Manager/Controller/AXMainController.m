@@ -42,7 +42,7 @@
     self.title = @"Password Manager";
     
     [self setUpTableView];
-    [self rightBarButton];
+    [self barButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -58,9 +58,62 @@
     [self.tableView autoPinEdgesToSuperviewEdges];
 }
 
-- (void)rightBarButton {
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPMItem:)];
-    self.navigationItem.rightBarButtonItem = item;
+- (void)barButton {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(compose:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPMItem:)];
+}
+
+- (void)compose:(UIBarButtonItem *)sender {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:kComposeMessage preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.textColor = [UIColor darkGrayColor];
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dealWithCode:alertController.textFields.firstObject.text];
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)dealWithCode:(NSString *)code {
+    switch (code.integerValue) {
+        case 1011:
+            [self deleteAllAlertController];
+            break;
+            
+        default:
+            [self alertWithMessage:@"Command code error!"];
+            break;
+    }
+}
+
+- (void)deleteAllAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:kDeleteAllMessage preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [self deleteAllTheData];
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)deleteAllTheData {
+    [[AXDBManager sharedManager] deleteAll];
+    [self.tableView reloadData];
 }
 
 - (void)addPMItem:(UIBarButtonItem *)sender {

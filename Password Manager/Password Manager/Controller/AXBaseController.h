@@ -15,7 +15,6 @@
     
     UITextField *itemIdField, *siteField, *userField, *mobileField, *emailField, *passwordField, *confirmPasswordField;
 }
-
 @property (nonatomic, strong) UITableView *tableView;
 
 - (void)alertWithMessage:(NSString *)string;

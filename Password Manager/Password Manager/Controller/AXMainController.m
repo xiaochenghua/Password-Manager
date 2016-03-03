@@ -14,7 +14,24 @@
 #import "AXDetailController.h"
 #import "AXModifyController.h"
 
-@interface AXMainController () <UITableViewDataSource, UITableViewDelegate>
+@interface AXMainController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+{
+    /**
+     *  搜索关键字
+     */
+    NSString *searchWords;
+    
+    /**
+     *  搜索出来的AXPasswordManager对象
+     */
+    NSMutableArray<AXPasswordManager *> *searchResults;
+}
+
+/**
+ *  所有的AXPasswordManager对象
+ */
+@property (nonatomic, copy) NSArray<AXPasswordManager *> *searchManagers;
+@property (nonatomic, strong) UISearchController *searchController;
 
 @end
 
@@ -33,6 +50,7 @@
 }
 
 - (void)setUpTableView {
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -51,6 +69,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (_searchController.active) {
+        return searchResults.count;
+    }
     return [[AXDBManager sharedManager] queryTotalCount];
 }
 
@@ -62,16 +83,30 @@
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.textLabel.text = manager.siteName;
+    if (_searchController.active) {
+        UIColor *color = [UIColor colorWithRed:30 / 255.0 green:144 / 255.0 blue:255 / 255.0 alpha:1.0];
+        NSString *result = searchResults[indexPath.row].siteName;
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:result];
+        NSRange range = [result rangeOfString:searchWords.lowercaseString];
+        [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
+        cell.textLabel.attributedText = attr;
+    } else {
+        AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        cell.textLabel.text = manager.siteName;
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
+    AXPasswordManager *manager = _searchController.active ? searchResults[indexPath.row] : [[AXDBManager sharedManager] queryAll][indexPath.row];
+    
+    if (_searchController.active) {
+        _searchController.active = NO;
+    }
+    
     AXDetailController *controller = [[AXDetailController alloc] initWithPasswordManagerItem:manager];
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -91,6 +126,46 @@
     updateAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     
     return @[updateAction, deleteAction];
+}
+
+- (UISearchController *)searchController {
+    if (!_searchController) {
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        _searchController.searchResultsUpdater = self;
+        _searchController.dimsBackgroundDuringPresentation = NO;
+        _searchController.hidesNavigationBarDuringPresentation = YES;
+        _searchController.searchBar.placeholder = @"Please enter the keywords";
+        _searchController.searchBar.delegate = self;
+        [_searchController.searchBar sizeToFit];
+    }
+    return _searchController;
+}
+
+#pragma mark - UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    searchWords = _searchController.searchBar.text;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.siteName CONTAINS[c] %@", searchWords];
+    searchResults = [NSMutableArray arrayWithArray:[self.searchManagers filteredArrayUsingPredicate:predicate]];
+    [self.tableView reloadData];
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    searchBar.showsCancelButton = YES;
+    for (id obj in searchBar.subviews[0].subviews) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)obj;
+            [btn setTitle:@"取消" forState:UIControlStateNormal];
+        }
+    }
+}
+
+- (NSArray<AXPasswordManager *> *)searchManagers {
+    return [[AXDBManager sharedManager] queryAll];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    NSLog(@"%f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
 }
 
 - (void)didReceiveMemoryWarning {

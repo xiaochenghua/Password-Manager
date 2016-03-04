@@ -50,7 +50,9 @@
 }
 
 - (void)setUpTableView {
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    if ([[AXDBManager sharedManager] queryTotalCount]) {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -71,18 +73,34 @@
         textField.textAlignment = NSTextAlignmentCenter;
         textField.textColor = [UIColor darkGrayColor];
         textField.keyboardType = UIKeyboardTypeNumberPad;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
     }];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self dealWithCode:alertController.textFields.firstObject.text];
+        if ([[AXDBManager sharedManager] queryTotalCount]) {
+            [self dealWithCode:alertController.textFields.firstObject.text];
+        } else {
+            [self alertWithMessage:@"The data has been emptied!"];
+        }
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     }];
+    okAction.enabled = NO;
     
     [alertController addAction:cancelAction];
     [alertController addAction:okAction];
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)alertTextFieldDidChange:(NSNotification *)notification {
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController) {
+        UITextField *textField = alertController.textFields.firstObject;
+        UIAlertAction *okAction = alertController.actions.lastObject;
+        okAction.enabled = textField.text.length == 4;
+    }
 }
 
 - (void)dealWithCode:(NSString *)code {

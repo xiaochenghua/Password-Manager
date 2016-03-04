@@ -18,5 +18,6 @@
 
 #define kComposeMessage @"Please enter a command code\n(Four-digit Number)"
 #define kDeleteAllMessage @"Delete all the data?"
+#define kSeqSet0Message @"Set the seq equal 0?"
 
 #endif /* String_h */

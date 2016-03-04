@@ -17,7 +17,8 @@
 }
 @property (nonatomic, strong) UITableView *tableView;
 
-- (void)alertWithMessage:(NSString *)string;
+- (void)alertWithMessage:(NSString *)message;
+- (void)alertWithMessage:(NSString *)message duration:(NSTimeInterval)duration;
 - (void)exchangeStatus:(UIButton *)btn;
 
 @end

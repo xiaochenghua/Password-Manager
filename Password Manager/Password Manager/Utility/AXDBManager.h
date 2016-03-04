@@ -42,7 +42,12 @@
 /**
  *  删除所有数据
  */
-- (void)deleteAll;
+- (BOOL)deleteAll;
+
+/**
+ *  序列号重置为0，只有数据为空时才可操作
+ */
+- (BOOL)seqSet0;
 
 /**
  *  查询

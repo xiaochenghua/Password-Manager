@@ -64,12 +64,17 @@
     }
 }
 
-- (void)alertWithMessage:(NSString *)string {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:string preferredStyle:UIAlertControllerStyleAlert];
+- (void)alertWithMessage:(NSString *)message {
+    [self alertWithMessage:message duration:2.0];
+}
+
+- (void)alertWithMessage:(NSString *)message duration:(NSTimeInterval)duration {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
     
     [self presentViewController:alertController animated:YES completion:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:nil];
     });
 }

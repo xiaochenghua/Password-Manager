@@ -73,18 +73,19 @@
         textField.textAlignment = NSTextAlignmentCenter;
         textField.textColor = [UIColor darkGrayColor];
         textField.keyboardType = UIKeyboardTypeNumberPad;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:textField];
     }];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if ([[AXDBManager sharedManager] queryTotalCount]) {
-            [self dealWithCode:alertController.textFields.firstObject.text];
-        } else {
-            [self alertWithMessage:@"The data has been emptied!"];
-        }
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+        [self dealWithCode:alertController.textFields.firstObject.text];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UITextFieldTextDidChangeNotification
+                                                      object:nil];
     }];
     okAction.enabled = NO;
     
@@ -109,6 +110,10 @@
             [self deleteAllAlertController];
             break;
             
+        case 1012:
+            [self seqSet0AlertController];
+            break;
+            
         default:
             [self alertWithMessage:@"Command code error!"];
             break;
@@ -116,10 +121,15 @@
 }
 
 - (void)deleteAllAlertController {
+    
+    if (![[AXDBManager sharedManager] queryTotalCount]) {
+        [self alertWithMessage:@"The data has been emptied!"];
+        return;
+    }
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:kDeleteAllMessage preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [self deleteAllTheData];
     }];
@@ -129,9 +139,39 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)seqSet0AlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:kSeqSet0Message preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [self seqSet0];
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 - (void)deleteAllTheData {
-    [[AXDBManager sharedManager] deleteAll];
+    if ([[AXDBManager sharedManager] deleteAll]) {
+        [self alertWithMessage:@"delete all success!"];
+    } else {
+        [self alertWithMessage:@"delete all failed!"];
+    }
     [self.tableView reloadData];
+}
+
+- (void)seqSet0 {
+    if ([[AXDBManager sharedManager] queryTotalCount]) {
+        [self alertWithMessage:@"Data is not empty, can't do this!"];
+        return;
+    }
+    
+    if ([[AXDBManager sharedManager] seqSet0]) {
+        [self alertWithMessage:@"Seq set 0 success!"];
+    } else {
+        [self alertWithMessage:@"Seq set 0 failed!"];
+    }
 }
 
 - (void)addPMItem:(UIBarButtonItem *)sender {

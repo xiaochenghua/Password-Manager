@@ -17,6 +17,6 @@
 @property (nonatomic, copy  ) NSString  *email;
 @property (nonatomic, copy  ) NSString  *password;
 
-- (void)setPMWithSite:(NSString *)site user:(NSString *)user mobile:(NSString *)mobile email:(NSString *)email password:(NSString *)password;
+- (void)setPasswordManagerWithSite:(NSString *)site user:(NSString *)user mobile:(NSString *)mobile email:(NSString *)email password:(NSString *)password;
 
 @end

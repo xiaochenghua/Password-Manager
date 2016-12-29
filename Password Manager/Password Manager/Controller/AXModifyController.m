@@ -96,11 +96,11 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    [self.manager setPMWithSite:[siteField.text trimmingSpaceCharacter]
-                       user:[userField.text trimmingSpaceCharacter]
-                     mobile:[mobileField.text trimmingSpaceCharacter]
-                      email:[emailField.text trimmingSpaceCharacter]
-                   password:[password encrypt]];
+    [self.manager setPasswordManagerWithSite:[siteField.text trimmingSpaceCharacter]
+                                        user:[userField.text trimmingSpaceCharacter]
+                                      mobile:[mobileField.text trimmingSpaceCharacter]
+                                       email:[emailField.text trimmingSpaceCharacter]
+                                    password:[password encrypt]];
     
     [[AXDBManager sharedManager] updateManager:self.manager];
     

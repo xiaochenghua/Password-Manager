@@ -97,11 +97,11 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     
     
     AXPasswordManager *manager = [[AXPasswordManager alloc] init];
-    [manager setPMWithSite:[siteField.text trimmingSpaceCharacter]
-                       user:[userField.text trimmingSpaceCharacter]
-                     mobile:[mobileField.text trimmingSpaceCharacter]
-                      email:[emailField.text trimmingSpaceCharacter]
-                   password:[password encrypt]];
+    [manager setPasswordManagerWithSite:[siteField.text trimmingSpaceCharacter]
+                                   user:[userField.text trimmingSpaceCharacter]
+                                 mobile:[mobileField.text trimmingSpaceCharacter]
+                                  email:[emailField.text trimmingSpaceCharacter]
+                               password:[password encrypt]];
     
     [[AXDBManager sharedManager] insertManager:manager];
     [self.navigationController popViewControllerAnimated:YES];

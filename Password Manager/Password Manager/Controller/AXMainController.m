@@ -33,6 +33,8 @@
 @property (nonatomic, copy) NSArray<AXPasswordManager *> *searchManagers;
 @property (nonatomic, strong) UISearchController *searchController;
 
+@property (nonatomic, assign) NSUInteger totalCount;
+
 @end
 
 @implementation AXMainController
@@ -40,19 +42,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Password Manager";
+    [self addObserver:self forKeyPath:@"totalCount" options:NSKeyValueObservingOptionNew context:nil];
     
     [self setUpTableView];
     [self barButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
+//    if ([[AXDBManager sharedManager] queryTotalCount]) {
+//        self.tableView.tableHeaderView = self.searchController.searchBar;
+//    }
+    
     [self.tableView reloadData];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    NSLog(@"totalCount 有变化");
+}
+
 - (void)setUpTableView {
-    if ([[AXDBManager sharedManager] queryTotalCount]) {
-        self.tableView.tableHeaderView = self.searchController.searchBar;
-    }
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -277,6 +286,10 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 //    NSLog(@"%f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
+}
+
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"totalCount" context:nil];
 }
 
 - (void)didReceiveMemoryWarning {

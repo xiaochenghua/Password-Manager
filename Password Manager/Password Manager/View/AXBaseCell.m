@@ -8,6 +8,7 @@
 
 #import "AXBaseCell.h"
 #import "UIView+Controller.h"
+#import "NSString+Handler.h"
 
 @interface AXBaseCell ()
 
@@ -48,7 +49,6 @@
 }
 
 - (void)setUpStatusButton {
-    
     [self.contentView addSubview:self.statusButton];
     [_statusButton autoSetDimensionsToSize:CGSizeMake(19.0f, 19.0f)];
     [_statusButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:15.0f];
@@ -58,6 +58,40 @@
     [self.contentView setNeedsUpdateConstraints];
 }
 
+#pragma mark - Events
+- (void)statusButtonClick:(UIButton *)button {
+    if (self.textField.secureTextEntry) {
+        self.textField.secureTextEntry = NO;
+        [button setImage:[UIImage imageNamed:@"show_pwd"] forState:UIControlStateNormal];
+        
+        if (self.textField.text == nil || [self.textField.text trimmingSpaceCharacter].length == 0) {
+            return;
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (!self.textField.secureTextEntry) {
+                self.textField.secureTextEntry = YES;
+                [button setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
+            }
+        });
+        
+    } else {
+        self.textField.secureTextEntry = YES;
+        [button setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
+    }
+}
+
+//- (void)setButtonImage:(UIButton *)button isSecureText:(BOOL)isSecureText {
+//    NSString *imageName = nil;
+//    if (isSecureText) {
+//        imageName = @"hide_pwd";
+//    } else {
+//        imageName = @"show_pwd";
+//    }
+//    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+//}
+
+#pragma mark - Lazy Loading
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
@@ -88,12 +122,12 @@
 
 - (UIButton *)statusButton {
     if (!_statusButton) {
-        _statusButton = [[UIButton alloc] init];
-        [_statusButton setImage:[UIImage imageNamed:@"hide_pwd"] forState:UIControlStateNormal];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-        [_statusButton addTarget:self.viewController action:@selector(exchangeStatus:) forControlEvents:UIControlEventTouchUpInside];
-#pragma clang diagnostic pop
+        _statusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_statusButton setImage:[UIImage imageNamed:@"hide_pwd"]
+                       forState:UIControlStateNormal];
+        [_statusButton addTarget:self
+                          action:@selector(statusButtonClick:)
+                forControlEvents:UIControlEventTouchUpInside];
     }
     return _statusButton;
 }

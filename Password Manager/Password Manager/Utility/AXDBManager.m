@@ -93,7 +93,7 @@
 
 - (NSArray<AXPasswordManager *> *)queryWithSite:(NSString *)siteName {
     NSString *sql = [_db stringForQuery:kQueryString, siteName];
-    NSLog(@"sql = %@", sql);          //  <---测试
+    NSLog(@"sql = %@", sql);          //  <---测试代码
     FMResultSet *rs = [_db executeQuery:sql];
     
     return [self arrayWithResultSet:rs];

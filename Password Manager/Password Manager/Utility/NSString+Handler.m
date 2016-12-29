@@ -9,7 +9,7 @@
 #import "NSString+Handler.h"
 
 //  salt
-static NSString *salt = @"q4ZUYTwEL2TMwTFLIVJu";
+static NSString * const salt = @"q4ZUYTwEL2TMwTFLIVJu";
 
 @implementation NSString (Handler)
 
@@ -34,7 +34,7 @@ static NSString *salt = @"q4ZUYTwEL2TMwTFLIVJu";
     NSString *temp = [self substringToIndex:range.location];
     
     //  加上@"="
-    NSString *sign;
+    NSString *sign = nil;
     switch (temp.length % 4) {
         case 1:
             sign = @"===";
@@ -67,14 +67,17 @@ static NSString *salt = @"q4ZUYTwEL2TMwTFLIVJu";
 }
 
 - (BOOL)isLegitimateWithRegex:(NSString *)regex {
-    
-    if (self == nil || self.length == 0) {
+    if (self == nil || [self trimmingSpaceCharacter].length == 0) {
         return NO;
     }
     
-    NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:nil];
-    NSArray *results = [regularExpression matchesInString:self options:NSMatchingReportProgress range:NSMakeRange(0, self.length)];
-    return results.count > 0 ? YES : NO;
+    NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regex
+                                                                                       options:NSRegularExpressionCaseInsensitive
+                                                                                         error:nil];
+    NSArray *results = [regularExpression matchesInString:self
+                                                  options:NSMatchingReportProgress
+                                                    range:NSMakeRange(0, self.length)];
+    return results.count > 0;
 }
 
 - (NSString *)trimmingSpaceCharacter {

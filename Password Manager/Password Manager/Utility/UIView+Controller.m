@@ -10,7 +10,7 @@
 
 @implementation UIView (Controller)
 
-- (UIViewController *)viewController {
+- (nullable UIViewController *)viewController {
     UIResponder *responder = nil;
     while ((responder = [responder nextResponder])) {
         if ([responder isKindOfClass:[UIViewController class]]) {

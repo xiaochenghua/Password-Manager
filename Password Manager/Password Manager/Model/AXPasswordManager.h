@@ -10,13 +10,24 @@
 
 @interface AXPasswordManager : NSObject
 
-@property (nonatomic, assign) NSInteger itemID;
-@property (nonatomic, copy  ) NSString  *siteName;
-@property (nonatomic, copy  ) NSString  *userName;
-@property (nonatomic, copy  ) NSString  *mobile;
-@property (nonatomic, copy  ) NSString  *email;
-@property (nonatomic, copy  ) NSString  *password;
+@property (nonatomic, assign, readonly) NSInteger itemID;
+@property (nonatomic, copy, readonly  ) NSString  *siteName;
+@property (nonatomic, copy, readonly  ) NSString  *userName;
+@property (nonatomic, copy, readonly  ) NSString  *mobile;
+@property (nonatomic, copy, readonly  ) NSString  *email;
+@property (nonatomic, copy, readonly  ) NSString  *password;
 
-- (void)setPasswordManagerWithSite:(NSString *)site user:(NSString *)user mobile:(NSString *)mobile email:(NSString *)email password:(NSString *)password;
+- (instancetype)initWithSite:(NSString *)site
+                        user:(NSString *)user
+                      mobile:(NSString *)mobile
+                       email:(NSString *)email
+                    password:(NSString *)password;
+
+- (instancetype)initWithSite:(NSString *)site
+                        user:(NSString *)user
+                      mobile:(NSString *)mobile
+                       email:(NSString *)email
+                    password:(NSString *)password
+                      itemID:(NSInteger)itemID;
 
 @end

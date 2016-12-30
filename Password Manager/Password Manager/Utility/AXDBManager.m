@@ -102,13 +102,12 @@
 - (NSArray<AXPasswordManager *> *)arrayWithResultSet:(FMResultSet *)rs {
     NSMutableArray<AXPasswordManager *> *tempArray = [NSMutableArray array];
     while ([rs next]) {
-        AXPasswordManager *manager = [[AXPasswordManager alloc] init];
-        manager.itemID   = [rs stringForColumn:@"item_id"].integerValue;
-        manager.siteName = [rs stringForColumn:@"site_name"];
-        manager.userName = [rs stringForColumn:@"user_name"];
-        manager.mobile   = [rs stringForColumn:@"mobile"];
-        manager.email    = [rs stringForColumn:@"email"];
-        manager.password = [rs stringForColumn:@"password"];
+        AXPasswordManager *manager = [[AXPasswordManager alloc] initWithSite:[rs stringForColumn:@"site_name"]
+                                                                        user:[rs stringForColumn:@"user_name"]
+                                                                      mobile:[rs stringForColumn:@"mobile"]
+                                                                       email:[rs stringForColumn:@"email"]
+                                                                    password:[rs stringForColumn:@"password"]
+                                                                      itemID:[rs stringForColumn:@"item_id"].integerValue];
         [tempArray addObject:manager];
     }
     return [tempArray copy];

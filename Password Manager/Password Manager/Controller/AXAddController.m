@@ -55,7 +55,6 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 }
 
 - (void)addButtonItemPressed:(UIBarButtonItem *)sender {
-    
     [self.view endEditing:YES];
     
     if (siteField.text == nil || [siteField.text trimmingSpaceCharacter].length == 0) {
@@ -94,15 +93,11 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    
-    
-    AXPasswordManager *manager = [[AXPasswordManager alloc] init];
-    [manager setPasswordManagerWithSite:[siteField.text trimmingSpaceCharacter]
-                                   user:[userField.text trimmingSpaceCharacter]
-                                 mobile:[mobileField.text trimmingSpaceCharacter]
-                                  email:[emailField.text trimmingSpaceCharacter]
-                               password:[password encrypt]];
-    
+    AXPasswordManager *manager = [[AXPasswordManager alloc] initWithSite:[siteField.text trimmingSpaceCharacter]
+                                                                    user:[userField.text trimmingSpaceCharacter]
+                                                                  mobile:[mobileField.text trimmingSpaceCharacter]
+                                                                   email:[emailField.text trimmingSpaceCharacter]
+                                                                password:[password encrypt]];
     [[AXDBManager sharedManager] insertManager:manager];
     [self.navigationController popViewControllerAnimated:YES];
 }

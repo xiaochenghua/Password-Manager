@@ -96,11 +96,11 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    [self.manager setPasswordManagerWithSite:[siteField.text trimmingSpaceCharacter]
-                                        user:[userField.text trimmingSpaceCharacter]
-                                      mobile:[mobileField.text trimmingSpaceCharacter]
-                                       email:[emailField.text trimmingSpaceCharacter]
-                                    password:[password encrypt]];
+    self.manager = [[AXPasswordManager alloc] initWithSite:[siteField.text trimmingSpaceCharacter]
+                                                      user:[userField.text trimmingSpaceCharacter]
+                                                    mobile:[mobileField.text trimmingSpaceCharacter]
+                                                     email:[emailField.text trimmingSpaceCharacter]
+                                                  password:[password encrypt]];
     
     [[AXDBManager sharedManager] updateManager:self.manager];
     
@@ -247,13 +247,6 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     }
     
     return YES;
-}
-
-- (AXPasswordManager *)manager {
-    if (!_manager) {
-        _manager = [[AXPasswordManager alloc] init];
-    }
-    return _manager;
 }
 
 - (void)didReceiveMemoryWarning {

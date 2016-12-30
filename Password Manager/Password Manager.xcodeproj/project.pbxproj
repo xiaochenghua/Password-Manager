@@ -24,7 +24,7 @@
 		E3C972931C86970000019829 /* AXDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C972921C86970000019829 /* AXDBManager.m */; };
 		E3C972961C86971B00019829 /* NSString+Handler.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C972951C86971B00019829 /* NSString+Handler.m */; };
 		E3C972991C86973800019829 /* AXMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C972981C86973800019829 /* AXMainController.m */; };
-		E3C9729C1C86975B00019829 /* AXPasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9729B1C86975B00019829 /* AXPasswordManager.m */; };
+		E3C9729C1C86975B00019829 /* AXPasswordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9729B1C86975B00019829 /* AXPasswordModel.m */; };
 		E3C972A01C86C12F00019829 /* UIView+Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9729F1C86C12F00019829 /* UIView+Controller.m */; };
 /* End PBXBuildFile section */
 
@@ -64,8 +64,8 @@
 		E3C972951C86971B00019829 /* NSString+Handler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Handler.m"; sourceTree = "<group>"; };
 		E3C972971C86973800019829 /* AXMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXMainController.h; sourceTree = "<group>"; };
 		E3C972981C86973800019829 /* AXMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXMainController.m; sourceTree = "<group>"; };
-		E3C9729A1C86975B00019829 /* AXPasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPasswordManager.h; sourceTree = "<group>"; };
-		E3C9729B1C86975B00019829 /* AXPasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPasswordManager.m; sourceTree = "<group>"; };
+		E3C9729A1C86975B00019829 /* AXPasswordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPasswordModel.h; sourceTree = "<group>"; };
+		E3C9729B1C86975B00019829 /* AXPasswordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPasswordModel.m; sourceTree = "<group>"; };
 		E3C9729D1C86997C00019829 /* SQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQL.h; sourceTree = "<group>"; };
 		E3C9729E1C86C12F00019829 /* UIView+Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Controller.h"; sourceTree = "<group>"; };
 		E3C9729F1C86C12F00019829 /* UIView+Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Controller.m"; sourceTree = "<group>"; };
@@ -123,8 +123,8 @@
 		E317238D1C75AD3700AB8E70 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E3C9729A1C86975B00019829 /* AXPasswordManager.h */,
-				E3C9729B1C86975B00019829 /* AXPasswordManager.m */,
+				E3C9729A1C86975B00019829 /* AXPasswordModel.h */,
+				E3C9729B1C86975B00019829 /* AXPasswordModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,7 +350,7 @@
 				E3C9728C1C86969A00019829 /* AXAddController.m in Sources */,
 				E3C972961C86971B00019829 /* NSString+Handler.m in Sources */,
 				E350D12E1C7C02E000F942AE /* AXInputCell.m in Sources */,
-				E3C9729C1C86975B00019829 /* AXPasswordManager.m in Sources */,
+				E3C9729C1C86975B00019829 /* AXPasswordModel.m in Sources */,
 				E350D1311C7C07D000F942AE /* AXDetailCell.m in Sources */,
 				E350D12B1C7C023900F942AE /* AXBaseCell.m in Sources */,
 				E3C9728D1C86969A00019829 /* AXBaseController.m in Sources */,

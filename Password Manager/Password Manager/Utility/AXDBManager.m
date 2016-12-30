@@ -8,7 +8,7 @@
 
 #import "AXDBManager.h"
 #import "FMDB.h"
-#import "AXPasswordManager.h"
+#import "AXPasswordModel.h"
 
 @interface AXDBManager ()<NSCopying>
 
@@ -56,21 +56,21 @@
     }
 }
 
-- (void)insertManager:(AXPasswordManager *)manager {
-    BOOL result = [_db executeUpdate:kInsertString, manager.siteName, manager.userName, manager.mobile, manager.email, manager.password];
+- (void)insertManager:(AXPasswordModel *)model {
+    BOOL result = [_db executeUpdate:kInsertString, model.siteName, model.userName, model.mobile, model.email, model.password];
     NSString *message = result ? @"insert success!" : @"insert failed!";
     NSLog(@"%@", message);
 }
 
-- (void)updateManager:(AXPasswordManager *)manager {
-    NSString *update_str = [NSString stringWithFormat:kUpdateString, manager.itemID];
-    BOOL result = [_db executeUpdate:update_str, manager.siteName, manager.userName, manager.mobile, manager.email, manager.password];
+- (void)updateManager:(AXPasswordModel *)model {
+    NSString *update_str = [NSString stringWithFormat:kUpdateString, model.itemID];
+    BOOL result = [_db executeUpdate:update_str, model.siteName, model.userName, model.mobile, model.email, model.password];
     NSString *message = result ? @"update success!" : @"update failed!";
     NSLog(@"%@", message);
 }
 
-- (void)deleteManager:(AXPasswordManager *)manager {
-    NSString *delete_str = [NSString stringWithFormat:kDeleteString, manager.itemID];
+- (void)deleteManager:(AXPasswordModel *)model {
+    NSString *delete_str = [NSString stringWithFormat:kDeleteString, model.itemID];
     BOOL result = [_db executeUpdate:delete_str];
     NSString *message = result ? @"delete success!" : @"delete failed!";
     NSLog(@"%@", message);
@@ -87,11 +87,11 @@
     return [_db executeUpdate:kSeqEqual0];
 }
 
-- (NSArray<AXPasswordManager *> *)queryAll {
+- (NSArray<AXPasswordModel *> *)queryAll {
     return [self arrayWithResultSet:[_db executeQuery:kQueryAllString]];
 }
 
-- (NSArray<AXPasswordManager *> *)queryWithSite:(NSString *)siteName {
+- (NSArray<AXPasswordModel *> *)queryWithSite:(NSString *)siteName {
     NSString *sql = [_db stringForQuery:kQueryString, siteName];
     NSLog(@"sql = %@", sql);          //  <---测试代码
     FMResultSet *rs = [_db executeQuery:sql];
@@ -99,16 +99,16 @@
     return [self arrayWithResultSet:rs];
 }
 
-- (NSArray<AXPasswordManager *> *)arrayWithResultSet:(FMResultSet *)rs {
-    NSMutableArray<AXPasswordManager *> *tempArray = [NSMutableArray array];
+- (NSArray<AXPasswordModel *> *)arrayWithResultSet:(FMResultSet *)rs {
+    NSMutableArray<AXPasswordModel *> *tempArray = [NSMutableArray array];
     while ([rs next]) {
-        AXPasswordManager *manager = [[AXPasswordManager alloc] initWithSite:[rs stringForColumn:@"site_name"]
-                                                                        user:[rs stringForColumn:@"user_name"]
-                                                                      mobile:[rs stringForColumn:@"mobile"]
-                                                                       email:[rs stringForColumn:@"email"]
-                                                                    password:[rs stringForColumn:@"password"]
-                                                                      itemID:[rs stringForColumn:@"item_id"].integerValue];
-        [tempArray addObject:manager];
+        AXPasswordModel *model = [[AXPasswordModel alloc] initWithSite:[rs stringForColumn:@"site_name"]
+                                                                  user:[rs stringForColumn:@"user_name"]
+                                                                mobile:[rs stringForColumn:@"mobile"]
+                                                                 email:[rs stringForColumn:@"email"]
+                                                              password:[rs stringForColumn:@"password"]
+                                                                itemID:[rs stringForColumn:@"item_id"].integerValue];
+        [tempArray addObject:model];
     }
     return [tempArray copy];
 }

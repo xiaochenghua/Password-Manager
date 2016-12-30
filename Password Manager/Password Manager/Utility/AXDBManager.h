@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AXPasswordManager;
+@class AXPasswordModel;
 
 @interface AXDBManager : NSObject
 
@@ -27,17 +27,17 @@
 /**
  *  插入
  */
-- (void)insertManager:(AXPasswordManager *)manager;
+- (void)insertManager:(AXPasswordModel *)model;
 
 /**
  *  更新
  */
-- (void)updateManager:(AXPasswordManager *)manager;
+- (void)updateManager:(AXPasswordModel *)model;
 
 /**
  *  删除
  */
-- (void)deleteManager:(AXPasswordManager *)manager;
+- (void)deleteManager:(AXPasswordModel *)model;
 
 /**
  *  删除所有数据
@@ -52,9 +52,9 @@
 /**
  *  查询
  */
-- (NSArray<AXPasswordManager *> *)queryAll;
+- (NSArray<AXPasswordModel *> *)queryAll;
 
-- (NSArray<AXPasswordManager *> *)queryWithSite:(NSString *)siteName;
+- (NSArray<AXPasswordModel *> *)queryWithSite:(NSString *)siteName;
 
 /**
  *  查询记录总数

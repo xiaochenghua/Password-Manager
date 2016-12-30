@@ -8,7 +8,7 @@
 
 #import "AXAddController.h"
 #import "AXMainController.h"
-#import "AXPasswordManager.h"
+#import "AXPasswordModel.h"
 #import "AXDBManager.h"
 #import "AXInputCell.h"
 #import "NSString+Handler.h"
@@ -93,12 +93,12 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    AXPasswordManager *manager = [[AXPasswordManager alloc] initWithSite:[siteField.text trimmingSpaceCharacter]
-                                                                    user:[userField.text trimmingSpaceCharacter]
-                                                                  mobile:[mobileField.text trimmingSpaceCharacter]
-                                                                   email:[emailField.text trimmingSpaceCharacter]
-                                                                password:[password encrypt]];
-    [[AXDBManager sharedManager] insertManager:manager];
+    AXPasswordModel *model = [[AXPasswordModel alloc] initWithSite:[siteField.text trimmingSpaceCharacter]
+                                                              user:[userField.text trimmingSpaceCharacter]
+                                                            mobile:[mobileField.text trimmingSpaceCharacter]
+                                                             email:[emailField.text trimmingSpaceCharacter]
+                                                          password:[password encrypt]];
+    [[AXDBManager sharedManager] insertManager:model];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

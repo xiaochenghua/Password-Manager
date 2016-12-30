@@ -8,7 +8,7 @@
 
 #import "AXMainController.h"
 #import "AXDBManager.h"
-#import "AXPasswordManager.h"
+#import "AXPasswordModel.h"
 #import "NSString+Handler.h"
 #import "AXAddController.h"
 #import "AXDetailController.h"
@@ -22,15 +22,15 @@
     NSString *searchWords;
     
     /**
-     *  搜索出来的AXPasswordManager对象
+     *  搜索出来的AXPasswordModel对象
      */
-    NSMutableArray<AXPasswordManager *> *searchResults;
+    NSMutableArray<AXPasswordModel *> *searchResults;
 }
 
 /**
- *  所有的AXPasswordManager对象
+ *  所有的AXPasswordModel对象
  */
-@property (nonatomic, copy) NSArray<AXPasswordManager *> *searchManagers;
+@property (nonatomic, copy) NSArray<AXPasswordModel *> *searchManagers;
 @property (nonatomic, strong) UISearchController *searchController;
 
 @property (nonatomic, assign) NSUInteger totalCount;
@@ -212,8 +212,8 @@
         [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
         cell.textLabel.attributedText = attr;
     } else {
-        AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
-        cell.textLabel.text = manager.siteName;
+        AXPasswordModel *model = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        cell.textLabel.text = model.siteName;
     }
     return cell;
 }
@@ -221,26 +221,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    AXPasswordManager *manager = _searchController.active ? searchResults[indexPath.row] : [[AXDBManager sharedManager] queryAll][indexPath.row];
+    AXPasswordModel *model = _searchController.active ? searchResults[indexPath.row] : [[AXDBManager sharedManager] queryAll][indexPath.row];
     
     if (_searchController.active) {
         _searchController.active = NO;
     }
     
-    AXDetailController *controller = [[AXDetailController alloc] initWithPasswordManagerItem:manager];
+    AXDetailController *controller = [[AXDetailController alloc] initWithPasswordModel:model];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
-        [[AXDBManager sharedManager] deleteManager:manager];
+        AXPasswordModel *model = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        [[AXDBManager sharedManager] deleteManager:model];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
     UITableViewRowAction *updateAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"修改" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        AXPasswordManager *manager = [[AXDBManager sharedManager] queryAll][indexPath.row];
-        AXModifyController *controller = [[AXModifyController alloc] initWithPasswordManagerItem:manager];
+        AXPasswordModel *model = [[AXDBManager sharedManager] queryAll][indexPath.row];
+        AXModifyController *controller = [[AXModifyController alloc] initWithPasswordModel:model];
         [self.navigationController pushViewController:controller animated:YES];
     }];
     updateAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
@@ -282,7 +282,7 @@
     }
 }
 
-- (NSArray<AXPasswordManager *> *)searchManagers {
+- (NSArray<AXPasswordModel *> *)searchManagers {
     return [[AXDBManager sharedManager] queryAll];
 }
 

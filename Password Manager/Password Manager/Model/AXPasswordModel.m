@@ -1,14 +1,14 @@
 //
-//  AXPasswordManager.m
+//  AXPasswordModel.m
 //  Password Manager
 //
 //  Created by arnoldxiao on 16/2/17.
 //  Copyright © 2016年 arnoldxiao. All rights reserved.
 //
 
-#import "AXPasswordManager.h"
+#import "AXPasswordModel.h"
 
-@interface AXPasswordManager ()
+@interface AXPasswordModel ()
 
 @property (nonatomic, assign) NSInteger itemID;
 @property (nonatomic, copy  ) NSString  *siteName;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation AXPasswordManager
+@implementation AXPasswordModel
 
 - (instancetype)initWithSite:(NSString *)site
                         user:(NSString *)user

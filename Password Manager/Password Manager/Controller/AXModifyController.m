@@ -7,14 +7,14 @@
 //
 
 #import "AXModifyController.h"
-#import "AXPasswordManager.h"
+#import "AXPasswordModel.h"
 #import "AXInputCell.h"
 #import "NSString+Handler.h"
 #import "AXDBManager.h"
 
 @interface AXModifyController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
-@property (nonatomic, strong) AXPasswordManager *manager;
+@property (nonatomic, strong) AXPasswordModel *model;
 
 @end
 
@@ -22,9 +22,9 @@ static const CGFloat SECTION_MARGIN = 20.0f;
 
 @implementation AXModifyController
 
-- (instancetype)initWithPasswordManagerItem:(AXPasswordManager *)manager {
+- (instancetype)initWithPasswordModel:(AXPasswordModel *)model {
     if (self = [super init]) {
-        self.manager = manager;
+        self.model = model;
         dataSource = @[
                        @[@{@"Site" : @"Site Name"}],
                        @[@{@"User" : @"User Name"}, @{@"Mobile" : @"Phone Number"}, @{@"Email" : @"Email"}],
@@ -96,13 +96,13 @@ static const CGFloat SECTION_MARGIN = 20.0f;
         return;
     }
     
-    self.manager = [[AXPasswordManager alloc] initWithSite:[siteField.text trimmingSpaceCharacter]
-                                                      user:[userField.text trimmingSpaceCharacter]
-                                                    mobile:[mobileField.text trimmingSpaceCharacter]
-                                                     email:[emailField.text trimmingSpaceCharacter]
-                                                  password:[password encrypt]];
+    self.model = [[AXPasswordModel alloc] initWithSite:[siteField.text trimmingSpaceCharacter]
+                                                  user:[userField.text trimmingSpaceCharacter]
+                                                mobile:[mobileField.text trimmingSpaceCharacter]
+                                                 email:[emailField.text trimmingSpaceCharacter]
+                                              password:[password encrypt]];
     
-    [[AXDBManager sharedManager] updateManager:self.manager];
+    [[AXDBManager sharedManager] updateManager:self.model];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -141,25 +141,25 @@ static const CGFloat SECTION_MARGIN = 20.0f;
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         siteField = cell.textField;
-        siteField.text = self.manager.siteName;
+        siteField.text = self.model.siteName;
         siteField.keyboardType = UIKeyboardTypeURL;
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         userField = cell.textField;
-        userField.text = self.manager.userName;
+        userField.text = self.model.userName;
     } else if (indexPath.section == 1 && indexPath.row == 1) {
         mobileField = cell.textField;
-        mobileField.text = self.manager.mobile;
+        mobileField.text = self.model.mobile;
         mobileField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     } else if (indexPath.section == 1 && indexPath.row == 2) {
         emailField = cell.textField;
-        emailField.text = self.manager.email;
+        emailField.text = self.model.email;
         emailField.keyboardType = UIKeyboardTypeEmailAddress;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         passwordField = cell.textField;
-        passwordField.text = [self.manager.password decrypt];
+        passwordField.text = [self.model.password decrypt];
     } else if (indexPath.section == 2 && indexPath.row == 1) {
         confirmPasswordField = cell.textField;
-        confirmPasswordField.text = [self.manager.password decrypt];
+        confirmPasswordField.text = [self.model.password decrypt];
     }
     
     cell.textField.delegate = self;

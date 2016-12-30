@@ -1,5 +1,5 @@
 //
-//  AXPasswordManager.h
+//  AXPasswordModel.h
 //  Password Manager
 //
 //  Created by arnoldxiao on 16/2/17.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AXPasswordManager : NSObject
+@interface AXPasswordModel : NSObject
 
 @property (nonatomic, assign, readonly) NSInteger itemID;
 @property (nonatomic, copy, readonly  ) NSString  *siteName;

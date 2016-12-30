@@ -8,20 +8,20 @@
 
 #import "AXDetailController.h"
 #import "AXDetailCell.h"
-#import "AXPasswordManager.h"
+#import "AXPasswordModel.h"
 #import "NSString+Handler.h"
 
 @interface AXDetailController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) AXPasswordManager *manager;
+@property (nonatomic, strong) AXPasswordModel *model;
 
 @end
 
 @implementation AXDetailController
 
-- (instancetype)initWithPasswordManagerItem:(AXPasswordManager *)manager {
+- (instancetype)initWithPasswordModel:(AXPasswordModel *)model {
     if (self = [super init]) {
-        self.manager = manager;
+        self.model = model;
         dataSource = @[
                        @[@"ID", @"Site"],
                        @[@"User", @"Mobile", @"Email"],
@@ -80,22 +80,22 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         itemIdField = cell.textField;
-        itemIdField.text = [NSString stringWithFormat:@"%ld", self.manager.itemID];
+        itemIdField.text = [NSString stringWithFormat:@"%ld", self.model.itemID];
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         siteField = cell.textField;
-        siteField.text = self.manager.siteName;
+        siteField.text = self.model.siteName;
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         userField = cell.textField;
-        userField.text = self.manager.userName;
+        userField.text = self.model.userName;
     } else if (indexPath.section == 1 && indexPath.row == 1) {
         mobileField = cell.textField;
-        mobileField.text = self.manager.mobile;
+        mobileField.text = self.model.mobile;
     } else if (indexPath.section == 1 && indexPath.row == 2) {
         emailField = cell.textField;
-        emailField.text = self.manager.email;
+        emailField.text = self.model.email;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         passwordField = cell.textField;
-        passwordField.text = [self.manager.password decrypt];
+        passwordField.text = [self.model.password decrypt];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -119,11 +119,11 @@
     return 20.0f;
 }
 
-- (AXPasswordManager *)manager {
-    if (!_manager) {
-        _manager = [[AXPasswordManager alloc] init];
+- (AXPasswordModel *)model {
+    if (!_model) {
+        _model = [[AXPasswordModel alloc] init];
     }
-    return _manager;
+    return _model;
 }
 
 - (void)didReceiveMemoryWarning {

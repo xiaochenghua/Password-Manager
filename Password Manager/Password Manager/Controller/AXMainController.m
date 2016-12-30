@@ -50,9 +50,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-//    if ([[AXDBManager sharedManager] queryTotalCount]) {
-//        self.tableView.tableHeaderView = self.searchController.searchBar;
-//    }
+    if ([[AXDBManager sharedManager] queryTotalCount]) {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
     
     [self.tableView reloadData];
 }
@@ -256,6 +256,7 @@
         _searchController.hidesNavigationBarDuringPresentation = YES;
         _searchController.searchBar.placeholder = @"Please enter the keywords";
         _searchController.searchBar.delegate = self;
+        _searchController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         [_searchController.searchBar sizeToFit];
     }
     return _searchController;
@@ -276,6 +277,7 @@
         if ([obj isKindOfClass:[UIButton class]]) {
             UIButton *btn = (UIButton *)obj;
             [btn setTitle:@"取消" forState:UIControlStateNormal];
+            return;
         }
     }
 }
@@ -285,7 +287,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    NSLog(@"%f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
+    NSLog(@"%f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
 }
 
 - (void)dealloc {

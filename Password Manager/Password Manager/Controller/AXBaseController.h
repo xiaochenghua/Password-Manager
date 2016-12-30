@@ -18,6 +18,6 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 - (void)alertWithMessage:(NSString *)message;
-//- (void)alertWithMessage:(NSString *)message dismiss:(NSTimeInterval)duration;
+//- (void)alertWithMessage:(NSString *)message duration:(NSTimeInterval)duration;
 
 @end

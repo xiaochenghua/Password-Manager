@@ -8,7 +8,6 @@
 
 #import "AXBaseController.h"
 #import "AXDetailCell.h"
-#import "NSString+Handler.h"
 
 @interface AXBaseController ()
 
@@ -24,8 +23,15 @@
 }
 
 - (void)viewDidLoad {
-    self.view.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
+    
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                          style:UIBarButtonItemStylePlain
+                                                                         target:self
+                                                                         action:nil];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = backBarButtonItem;
 }
 
 - (UITableView *)tableView {
@@ -38,10 +44,10 @@
 }
 
 - (void)alertWithMessage:(NSString *)message {
-    [self alertWithMessage:message dismiss:2.0];
+    [self alertWithMessage:message duration:2.0];
 }
 
-- (void)alertWithMessage:(NSString *)message dismiss:(NSTimeInterval)duration {
+- (void)alertWithMessage:(NSString *)message duration:(NSTimeInterval)duration {
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
     

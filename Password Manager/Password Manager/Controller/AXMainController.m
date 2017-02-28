@@ -50,6 +50,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    [super viewWillAppear:animated];
+    
     if ([[AXDBManager sharedManager] queryTotalCount]) {
         self.tableView.tableHeaderView = self.searchController.searchBar;
     }

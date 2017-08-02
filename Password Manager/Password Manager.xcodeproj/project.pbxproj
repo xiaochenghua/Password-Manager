@@ -255,7 +255,8 @@
 				TargetAttributes = {
 					E3230FCE1C7454EF002F7516 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = BY4SK3N8B6;
+						DevelopmentTeam = F6MKBTS8DW;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -448,12 +449,16 @@
 			baseConfigurationReference = DEB63C7BCAD88D0F86F57B65 /* Pods-Password Manager.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F6MKBTS8DW;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Password Manager/PMPrefixHeader.pch";
 				INFOPLIST_FILE = "Password Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.arnoldxiao.Password-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -462,12 +467,15 @@
 			baseConfigurationReference = FF2F2265B1B48BEF1F0E9A36 /* Pods-Password Manager.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F6MKBTS8DW;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Password Manager/PMPrefixHeader.pch";
 				INFOPLIST_FILE = "Password Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.arnoldxiao.Password-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
